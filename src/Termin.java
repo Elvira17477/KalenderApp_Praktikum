@@ -13,9 +13,8 @@ public class Termin {
         this.ende = ende;
     }
     public int getDauer(){
-        long duration = Duration.between(start, ende).toMinutes();
-        int dauer = Long.valueOf(duration).intValue();
-        return dauer;
+        long duration = Duration.between(start, ende).toMinutes();  //Abstand start - ende in minuten
+        return Long.valueOf(duration).intValue();
     }
     public String getName() {
         return name;
@@ -26,11 +25,11 @@ public class Termin {
         }
     }
     public String getInfo(){
-        DateTimeFormatter startFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd  hh:mm");
-        String formattedStart = start.format(startFormatter);
-        DateTimeFormatter endFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd  hh:mm");
+        DateTimeFormatter startFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm"); //Startdatum formatieren
+        String formattedStart = start.format(startFormatter);                                //Startdatum in gewünschtes Format konvertieren
+        DateTimeFormatter endFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm");
         String formattedEnd = ende.format(endFormatter);
 
-        return (name + "\tStart: " + formattedStart + "\t\tEnde: " + formattedEnd);
+        return ("Name: " + name + "\tStart: " + formattedStart + "\t\tEnde: " + formattedEnd);
     }
 }

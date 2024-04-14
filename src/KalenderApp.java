@@ -4,8 +4,10 @@ public class KalenderApp{
     public static void main(String[] args){
         Kalender kalender1 = new Kalender();
         kalender1.init();
+        kalender1.setName("\t\t\t\t\t\tFreizeitkalender");
         Kalender kalender2 = new Kalender();
         kalender2.init();
+        kalender2.setName("\t\t\t\t\t\tStudienkalender");
 
         Termin termin1 = new Termin();
         termin1.init("Zahnarzt", LocalDateTime.of(2024, 03, 30, 17, 30),
@@ -14,7 +16,7 @@ public class KalenderApp{
         termin2.init("Klettern", LocalDateTime.of(2024, 04, 01, 18, 00),
                 LocalDateTime.of(2024, 04, 01, 20, 00));
         Termin termin3 = new Termin();
-        termin3.init("Geburtstag", LocalDateTime.of(2024, 03, 25, 10, 00),
+        termin3.init("Geburtstg", LocalDateTime.of(2024, 03, 25, 10, 00),
                 LocalDateTime.of(2024, 03, 25, 12, 00));
 
 
@@ -29,14 +31,10 @@ public class KalenderApp{
         kalender1.addTermin(termin1);
         kalender1.addTermin(termin2);
         kalender1.addSerie(terminserie1);
-
-        System.out.println("\nKalender1: ");
         kalender1.ausgeben();
 
         kalender2.addTermin(termin3);
         kalender2.addSerie(terminserie2);
-
-        System.out.println("\n\nKalender2: ");
         kalender2.ausgeben();
     }
 }
