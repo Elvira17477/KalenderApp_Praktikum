@@ -71,7 +71,7 @@ public class KalenderApp{
                     System.out.println("Bitte geben Sie den Kalender an, dessen Termine ausgegeben werden sollen: ");
                     String kname = scan.nextLine();
                     if(Kalenderserie.kalenderExistiert(kname)) {
-                        Kalender.ausgeben(kname);
+                        //Kalender.ausgeben(kname);
                     }else{
                         System.out.println("Der Kalender wurde nicht gefunden.");
                     }
@@ -95,17 +95,26 @@ public class KalenderApp{
                             LocalDateTime.of(2024, 04, 25, 14, 00));
                     Termin terminV3 = new Termin("SoftSkills", LocalDateTime.of(2024, 04, 26, 10, 00),
                             LocalDateTime.of(2024, 04, 26, 12, 00));
+                    Termin terminV4 = new Termin("SoftSkill", LocalDateTime.of(2024, 04, 26, 14, 00),
+                            LocalDateTime.of(2024, 04, 26, 16, 00));
                     kalender1.addTermin(terminV1);
                     kalender1.addTermin(terminV2);
                     kalender1.addTermin(terminV3);
+                    kalender1.addTermin(terminV4);
 
                     Kalender kalender2 = new Kalender("Freizeit");
+                    Termin terminF0 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 8, 00),
+                            LocalDateTime.of(2024, 04, 25, 10, 00));
+                    Termin terminF00 = new Termin("Kochen", LocalDateTime.of(2024, 04, 25, 12, 00),
+                            LocalDateTime.of(2024, 04, 25, 14, 00));
                     Termin terminF1 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 14, 00),
                             LocalDateTime.of(2024, 04, 25, 16, 00));
                     Termin terminF2 = new Termin("Zahnarzt", LocalDateTime.of(2024, 04, 26, 8, 00),
                             LocalDateTime.of(2024, 04, 26, 10, 00));
                     Termin terminF3 = new Termin("Kochen", LocalDateTime.of(2024, 04, 26, 14, 00),
                             LocalDateTime.of(2024, 04, 26, 16, 00));
+                    kalender2.addTermin(terminF0);
+                    kalender2.addTermin(terminF00);
                     kalender2.addTermin(terminF1);
                     kalender2.addTermin(terminF2);
                     kalender2.addTermin(terminF3);
