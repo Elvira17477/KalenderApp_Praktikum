@@ -28,6 +28,20 @@ public class Termin {
         return ende;
     }
 
+    //prüfen, ob sich die Termine überschneiden
+    public boolean TermineNichtUeberschneiden(Termin termin){
+        if(termin == null) return true;
+        if(!termin.getStart().isAfter(this.getStart())){
+            if(!termin.getEnde().isAfter(this.getStart())) return true;
+            else return false;
+        }
+        else {
+            if(!this.getEnde().isAfter(termin.getStart())) return true;
+            else return false;
+        }
+
+
+    }
     public void setName(String name){
         if(!name.isEmpty()){
             this.name = name;
@@ -54,8 +68,5 @@ public class Termin {
     }
     public LocalTime getEndTime() {
         return ende.toLocalTime();
-    }
-    public int getMinutes() {
-        return start.getMinute();
     }
 }
