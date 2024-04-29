@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Scanner;
 
+
 public class KalenderApp{
     public static void Benutzereingabe(){
         Scanner scan = new Scanner(System.in);
@@ -89,38 +90,40 @@ public class KalenderApp{
                     break;
                 case 8:
                     Kalender kalender1 = new Kalender("Vorlesungen");
-                    Termin terminV1 = new Termin("EIDOP", LocalDateTime.of(2024, 04, 25, 8, 00),
-                            LocalDateTime.of(2024, 04, 25, 10, 00));
-                    Termin terminV2 = new Termin("Mathe", LocalDateTime.of(2024, 04, 25, 12, 00),
-                            LocalDateTime.of(2024, 04, 25, 14, 00));
-                    Termin terminV3 = new Termin("SoftSkills", LocalDateTime.of(2024, 04, 26, 10, 00),
-                            LocalDateTime.of(2024, 04, 26, 12, 00));
-                    Termin terminV4 = new Termin("SoftSkill", LocalDateTime.of(2024, 04, 26, 14, 00),
-                            LocalDateTime.of(2024, 04, 26, 16, 00));
+                    Termin terminV1 = new Termin("EIDOP", LocalDateTime.of(2024, 4, 25, 8, 0),
+                            LocalDateTime.of(2024, 4, 25, 10, 0));
+                    Termin terminV2 = new Termin("Mathe", LocalDateTime.of(2024, 4, 25, 12, 0),
+                            LocalDateTime.of(2024, 4, 25, 14, 0));
+
+                    Termin terminV3 = new Termin("SoftSkills", LocalDateTime.of(2024, 4, 26, 10, 0),
+                            LocalDateTime.of(2024, 4, 26, 12, 0));
+                    Termin terminV4 = new Termin("SoftSkill", LocalDateTime.of(2024, 4, 26, 14, 0),
+                            LocalDateTime.of(2024, 4, 26, 16, 0));
                     kalender1.addTermin(terminV1);
                     kalender1.addTermin(terminV2);
                     kalender1.addTermin(terminV3);
                     kalender1.addTermin(terminV4);
 
                     Kalender kalender2 = new Kalender("Freizeit");
-                    Termin terminF0 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 8, 00),
-                            LocalDateTime.of(2024, 04, 25, 10, 00));
-                    Termin terminF00 = new Termin("Kochen", LocalDateTime.of(2024, 04, 25, 12, 00),
-                            LocalDateTime.of(2024, 04, 25, 14, 00));
-                    Termin terminF1 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 14, 00),
-                            LocalDateTime.of(2024, 04, 25, 16, 00));
-                    Termin terminF2 = new Termin("Zahnarzt", LocalDateTime.of(2024, 04, 26, 8, 00),
-                            LocalDateTime.of(2024, 04, 26, 10, 00));
-                    Termin terminF3 = new Termin("Kochen", LocalDateTime.of(2024, 04, 26, 14, 00),
-                            LocalDateTime.of(2024, 04, 26, 16, 00));
-                    kalender2.addTermin(terminF0);
+//                    Termin terminF0 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 8, 00),
+//                            LocalDateTime.of(2024, 04, 25, 10, 00));
+                    Termin terminF00 = new Termin("Kochen", LocalDateTime.of(2024, 4, 25, 12, 0),
+                            LocalDateTime.of(2024, 4, 25, 14, 0));
+//                    Termin terminF1 = new Termin("Klettern", LocalDateTime.of(2024, 4, 25, 14, 0),
+//                            LocalDateTime.of(2024, 4, 25, 16, 0));
+
+                    Termin terminF2 = new Termin("Zahnarzt", LocalDateTime.of(2024, 4, 26, 10, 0),
+                            LocalDateTime.of(2024, 04, 26, 12, 0));
+                    Termin terminF3 = new Termin("Kochen", LocalDateTime.of(2024, 4, 26, 14, 0),
+                            LocalDateTime.of(2024, 4, 26, 16, 0));
+                    //kalender2.addTermin(terminF0);
                     kalender2.addTermin(terminF00);
-                    kalender2.addTermin(terminF1);
+                    //kalender2.addTermin(terminF1);
                     kalender2.addTermin(terminF2);
                     kalender2.addTermin(terminF3);
 
-                    Termin[] freieTermine = kalender1.freieTermineFinden(kalender2, LocalDate.of(2024, 04, 25),
-                            LocalDate.of(2024, 04, 26), LocalTime.of(8, 00), LocalTime.of(16, 00),
+                    Termin[] freieTermine = kalender1.freieTermineFinden(kalender2, LocalDate.of(2024, 4, 25),
+                            LocalDate.of(2024, 4, 26), LocalTime.of(8, 0), LocalTime.of(16, 0),
                             120, "Freier Termin");
 
                     for(Termin termin : freieTermine){
@@ -134,36 +137,39 @@ public class KalenderApp{
             }
         }
     }
+
+    public static void testFreieTermineFinden() {
+        // Erstellen von Kalendern und Terminen
+        Kalender kalender1 = new Kalender("Freizeit");
+        Kalender kalender2 = new Kalender("Vorlesungen");
+
+        // Hinzufügen von Terminen zu den Kalendern (Annahme: die Methode zum Hinzufügen von Terminen existiert)
+        LocalDateTime startDatum = LocalDateTime.of(2024, 4, 29, 9, 0); // Startdatum und -zeit
+        LocalDateTime endDatum = LocalDateTime.of(2024, 4, 29, 18, 0);   // Enddatum und -zeit
+
+        Termin termin1 = new Termin("Meeting", startDatum, startDatum.plusHours(1)); // Termin im ersten Kalender
+        kalender1.addTermin(termin1);
+
+        Termin termin2 = new Termin("Appointment", startDatum.plusHours(2), startDatum.plusHours(3)); // Termin im zweiten Kalender
+        kalender2.addTermin(termin2);
+
+        // Durchführung der Methode freieTermineFinden
+        Termin[] freieTermine = Kalender.freieTermineFinden(kalender2, LocalDate.of(2024, 4, 29), LocalDate.of(2024, 4, 30),
+                LocalTime.of(8, 0), LocalTime.of(20, 0), 60, "Free Slot");
+
+        // Überprüfung des Ergebnisses
+        Assert.assertEquals(1, freieTermine.length); // Es sollte einen freien Termin geben
+
+        // Überprüfen, ob der freie Termin den erwarteten Eigenschaften entspricht
+        Assert.assertEquals("Free Slot", freieTermine[0].getName());
+        Assert.assertEquals(startDatum.plusHours(1), freieTermine[0].getStart());
+        Assert.assertEquals(startDatum.plusHours(2), freieTermine[0].getEnde());
+    }
+
     public static void main(String[] args){
 
         Kalenderserie.getInstance();
         Benutzereingabe();
-
-//        Kalender kalender1 = new Kalender();
-//        kalender1.setName("\t\t\t\t\t\tFreizeit");
-//        Kalender kalender2 = new Kalender();
-//        kalender2.setName("\t\t\t\t\t\tVorlesungen");
-//
-//        Termin termin1 = new Termin("Zahnarzt", LocalDateTime.of(2024, 03, 30, 17, 30),
-//                LocalDateTime.of(2024, 03, 30, 18, 00));
-//
-//        Termin termin2 = new Termin("Klettern", LocalDateTime.of(2024, 04, 01, 18, 00),
-//                LocalDateTime.of(2024, 04, 01, 20, 00));
-//
-//
-//        Terminserie terminserie1 = new Terminserie(7, "Vorlesung", LocalDateTime.of(2024, 03, 28, 10, 30),
-//                LocalDateTime.of(2024, 03, 28, 12, 30), 7);
-//
-//        Terminserie terminserie2 = new Terminserie(7, "Praktikum", LocalDateTime.of(2024, 03, 29, 14, 15),
-//                LocalDateTime.of(2024, 03, 29, 15, 45), 7);
-//
-//
-//        kalender1.addTermin(termin1);
-//        kalender1.addTermin(termin2);
-//        kalender1.addSerie(terminserie1);
-//        kalender1.ausgeben();
-//
-//        kalender2.addSerie(terminserie2);
-//        kalender2.ausgeben();
+        //testFreieTermineFinden();
     }
 }
