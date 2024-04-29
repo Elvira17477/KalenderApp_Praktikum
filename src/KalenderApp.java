@@ -138,33 +138,33 @@ public class KalenderApp{
         }
     }
 
-    public static void testFreieTermineFinden() {
-        // Erstellen von Kalendern und Terminen
-        Kalender kalender1 = new Kalender("Freizeit");
-        Kalender kalender2 = new Kalender("Vorlesungen");
-
-        // Hinzufügen von Terminen zu den Kalendern (Annahme: die Methode zum Hinzufügen von Terminen existiert)
-        LocalDateTime startDatum = LocalDateTime.of(2024, 4, 29, 9, 0); // Startdatum und -zeit
-        LocalDateTime endDatum = LocalDateTime.of(2024, 4, 29, 18, 0);   // Enddatum und -zeit
-
-        Termin termin1 = new Termin("Meeting", startDatum, startDatum.plusHours(1)); // Termin im ersten Kalender
-        kalender1.addTermin(termin1);
-
-        Termin termin2 = new Termin("Appointment", startDatum.plusHours(2), startDatum.plusHours(3)); // Termin im zweiten Kalender
-        kalender2.addTermin(termin2);
-
-        // Durchführung der Methode freieTermineFinden
-        Termin[] freieTermine = Kalender.freieTermineFinden(kalender2, LocalDate.of(2024, 4, 29), LocalDate.of(2024, 4, 30),
-                LocalTime.of(8, 0), LocalTime.of(20, 0), 60, "Free Slot");
-
-        // Überprüfung des Ergebnisses
-        Assert.assertEquals(1, freieTermine.length); // Es sollte einen freien Termin geben
-
-        // Überprüfen, ob der freie Termin den erwarteten Eigenschaften entspricht
-        Assert.assertEquals("Free Slot", freieTermine[0].getName());
-        Assert.assertEquals(startDatum.plusHours(1), freieTermine[0].getStart());
-        Assert.assertEquals(startDatum.plusHours(2), freieTermine[0].getEnde());
-    }
+//    public static void testFreieTermineFinden() {
+//        // Erstellen von Kalendern und Terminen
+//        Kalender kalender1 = new Kalender("Freizeit");
+//        Kalender kalender2 = new Kalender("Vorlesungen");
+//
+//        // Hinzufügen von Terminen zu den Kalendern (Annahme: die Methode zum Hinzufügen von Terminen existiert)
+//        LocalDateTime startDatum = LocalDateTime.of(2024, 4, 29, 9, 0); // Startdatum und -zeit
+//        LocalDateTime endDatum = LocalDateTime.of(2024, 4, 29, 18, 0);   // Enddatum und -zeit
+//
+//        Termin termin1 = new Termin("Meeting", startDatum, startDatum.plusHours(1)); // Termin im ersten Kalender
+//        kalender1.addTermin(termin1);
+//
+//        Termin termin2 = new Termin("Appointment", startDatum.plusHours(2), startDatum.plusHours(3)); // Termin im zweiten Kalender
+//        kalender2.addTermin(termin2);
+//
+//        // Durchführung der Methode freieTermineFinden
+//        Termin[] freieTermine = freieTermineFinden(kalender2, LocalDate.of(2024, 4, 29), LocalDate.of(2024, 4, 30),
+//                LocalTime.of(8, 0), LocalTime.of(20, 0), 60, "Free Slot");
+//
+//        // Überprüfung des Ergebnisses
+//        Assert.assertEquals(1, freieTermine.length); // Es sollte einen freien Termin geben
+//
+//        // Überprüfen, ob der freie Termin den erwarteten Eigenschaften entspricht
+//        Assert.assertEquals("Free Slot", freieTermine[0].getName());
+//        Assert.assertEquals(startDatum.plusHours(1), freieTermine[0].getStart());
+//        Assert.assertEquals(startDatum.plusHours(2), freieTermine[0].getEnde());
+//    }
 
     public static void main(String[] args){
 

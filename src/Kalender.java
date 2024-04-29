@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Kalender{
     private String name;
-    private static Termin[] termine;
+    private Termin[] termine;
     private Terminserie[] serien;
     private Termin[] freieTermine;
 
@@ -50,7 +50,7 @@ public class Kalender{
         serien = neueTerminserien;
     }
 
-    public static Termin[] freieTermineFinden(Kalender kalender2, java.time.LocalDate startDatum, java.time.LocalDate endDatum,
+    public Termin[] freieTermineFinden(Kalender kalender2, java.time.LocalDate startDatum, java.time.LocalDate endDatum,
                                               java.time.LocalTime ab, java.time.LocalTime bis, int dauer, String name) {
 
         ArrayList<Termin> freieTermine = new ArrayList<>();
@@ -69,10 +69,10 @@ public class Kalender{
 
         //finde überschneidende freie Termine
         for (int i = 0; i < freieTermineK1.size(); i++) {
-            if(freieTermineK1.get(i).getDauer() >= dauer &&                   //termin[i] dauert mindestens "dauer" minuten
-                    (freieTermineK1.get(i).getStartTime().getMinute() == 0 || freieTermineK1.get(i).getStartTime().getMinute() == 30)){  //termin[i] startet entweder um 00 oder 30 nach
+            if((freieTermineK1.get(i).getStartTime().getMinute() == 0 || freieTermineK1.get(i).getStartTime().getMinute() == 30)){  //termin[i] startet entweder um 00 oder 30 nach
 
                 for(int j = 0; j < freieTermineK2.size(); j++){
+
                     LocalDateTime start1 = freieTermineK1.get(i).getStart();
                     LocalDateTime end1 = freieTermineK1.get(i).getEnde();
                     LocalDateTime start2 = freieTermineK2.get(j).getStart();
@@ -82,19 +82,21 @@ public class Kalender{
                     LocalDateTime overlapEnd = end1.isBefore(end2) ? end1 : end2;
                     Duration overlapDuration = Duration.between(overlapStart, overlapEnd);
 
-                    if(Objects.equals(freieTermineK1.get(i).getName(), name) &&
-                            freieTermineK2.get(j).getDauer() >= dauer &&
-                            (freieTermineK2.get(j).getStartTime().getMinute() == 0 || freieTermineK2.get(j).getStartTime().getMinute() == 30)){
+                    if((freieTermineK2.get(j).getStartTime().getMinute() == 0 || freieTermineK2.get(j).getStartTime().getMinute() == 30)){
 
                         if(start1.isEqual(start2) && end1.isEqual(end2)){      //beide Termine genau überlappend
                             LocalDateTime start = freieTermineK2.get(j).getStartDate().atTime(freieTermineK2.get(j).getStartTime());
                             LocalDateTime ende = freieTermineK2.get(j).getEndDate().atTime(freieTermineK2.get(j).getEndTime());
                             Termin freierTermin = new Termin(name, start, ende);
-                            freieTermine.add(freierTermin);
+                            if(!freieTermine.contains(freierTermin)) {
+                                freieTermine.add(freierTermin);
+                            }
                         }
                         if(overlapDuration.toMinutes() >= dauer) {             //Termine asymmetrisch überlappend
                             Termin freierTermin = new Termin(name, overlapStart, overlapStart.plusMinutes(dauer));
-                            freieTermine.add(freierTermin);
+                            if(!freieTermine.contains(freierTermin)) {
+                                freieTermine.add(freierTermin);
+                            }
                         }
                     }
                 }
@@ -113,6 +115,17 @@ public class Kalender{
         //freie Termine zwischen vorhandenen Terminen einfügen
         for (int i = 0; i < suchzeitK.size()-1; i++) {
 
+            if(i == 0) {
+                if (suchzeitK.get(i).getStartTime().isAfter(ab)) {
+                    LocalDateTime start1 = startDatum.atTime(ab);
+                    LocalDateTime ende1 = suchzeitK.get(0).getStartDate().atTime(suchzeitK.get(0).getStartTime());
+                    Duration dur = Duration.between(start1, ende1);
+                    if (dur.toMinutes() >= dauer) {
+                        Termin ersterTermin = new Termin(name, start1, ende1);
+                        freieTermine.add(ersterTermin);
+                    }
+                }
+            }
             //Ende des aktuellen Termins
             LocalDateTime start = suchzeitK.get(i).getEndDate().atTime(suchzeitK.get(i).getEndTime());
             //Anfang des nächsten Termins
@@ -147,26 +160,28 @@ public class Kalender{
                         freieTermine.add(anfangsTermin);
                     }
                 }
-            }
-            // Füge freie Termine am Anfang und Ende des Zeitraums ein, wenn nötig
-            if (suchzeitK.get(0).getStartTime().isAfter(ab)) {
-                LocalDateTime start1 = startDatum.atTime(ab);
-                LocalDateTime ende1 = suchzeitK.get(0).getStartDate().atTime(suchzeitK.get(0).getStartTime());
-                Duration dur = Duration.between(start1, ende);
-                if(dur.toMinutes() >= dauer) {
-                    Termin ersterTermin = new Termin(name, start1, ende1);
-                    freieTermine.add(ersterTermin);
+                if(i == suchzeitK.size()-2){
+                    if (suchzeitK.get(suchzeitK.size() - 1).getEndTime().isBefore(bis)) {
+                        LocalDateTime start2 = suchzeitK.get(suchzeitK.size() - 1).getEndDate().atTime(suchzeitK.get(suchzeitK.size() - 1).getEndTime());
+                        LocalDateTime ende2 = endDatum.atTime(bis);
+                        Duration dur = Duration.between(start2, ende2);
+                        if(dur.toMinutes() >= dauer) {
+                            Termin letzterTermin = new Termin(name, start2, ende2);
+                            freieTermine.add(letzterTermin);
+                        }
+                    }
                 }
             }
-            if (suchzeitK.get(suchzeitK.size() - 1).getEndTime().isBefore(bis)) {
-                LocalDateTime start2 = suchzeitK.get(suchzeitK.size() - 1).getEndDate().atTime(suchzeitK.get(suchzeitK.size() - 1).getEndTime());
-                LocalDateTime ende2 = endDatum.atTime(bis);
-                Duration dur = Duration.between(start2, ende2);
-                if(dur.toMinutes() >= dauer) {
-                    Termin letzterTermin = new Termin(name, start2, ende2);
-                    freieTermine.add(letzterTermin);
-                }
-            }
+//            // Füge freie Termine am Anfang und Ende des Zeitraums ein, wenn nötig
+//            if (suchzeitK.get(0).getStartTime().isAfter(ab)) {
+//                LocalDateTime start1 = startDatum.atTime(ab);
+//                LocalDateTime ende1 = suchzeitK.get(0).getStartDate().atTime(suchzeitK.get(0).getStartTime());
+//                Duration dur = Duration.between(start1, ende);
+//                if(dur.toMinutes() >= dauer) {
+//                    Termin ersterTermin = new Termin(name, start1, ende1);
+//                    freieTermine.add(ersterTermin);
+//                }
+//            }
         }
         return freieTermine;
     }
