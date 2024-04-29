@@ -69,8 +69,6 @@ public class Kalender{
 
         //finde überschneidende freie Termine
         for (int i = 0; i < freieTermineK1.size(); i++) {
-            if((freieTermineK1.get(i).getStartTime().getMinute() == 0 || freieTermineK1.get(i).getStartTime().getMinute() == 30)){  //termin[i] startet entweder um 00 oder 30 nach
-
                 for(int j = 0; j < freieTermineK2.size(); j++){
 
                     LocalDateTime start1 = freieTermineK1.get(i).getStart();
@@ -82,25 +80,25 @@ public class Kalender{
                     LocalDateTime overlapEnd = end1.isBefore(end2) ? end1 : end2;
                     Duration overlapDuration = Duration.between(overlapStart, overlapEnd);
 
-                    if((freieTermineK2.get(j).getStartTime().getMinute() == 0 || freieTermineK2.get(j).getStartTime().getMinute() == 30)){
-
                         if(start1.isEqual(start2) && end1.isEqual(end2)){      //beide Termine genau überlappend
                             LocalDateTime start = freieTermineK2.get(j).getStartDate().atTime(freieTermineK2.get(j).getStartTime());
                             LocalDateTime ende = freieTermineK2.get(j).getEndDate().atTime(freieTermineK2.get(j).getEndTime());
-                            Termin freierTermin = new Termin(name, start, ende);
-                            if(!freieTermine.contains(freierTermin)) {
-                                freieTermine.add(freierTermin);
+                            if(start.toLocalTime().getMinute() == 0 || start.toLocalTime().getMinute() == 30){
+                                Termin freierTermin = new Termin(name, start, ende);
+                                if(!freieTermine.contains(freierTermin)) {
+                                    freieTermine.add(freierTermin);
+                                    break;
+                                }
                             }
                         }
-                        if(overlapDuration.toMinutes() >= dauer) {             //Termine asymmetrisch überlappend
+                        if(overlapDuration.toMinutes() >= dauer && (overlapStart.toLocalTime().getMinute() == 0 || overlapStart.toLocalTime().getMinute() == 30)) {             //Termine asymmetrisch überlappend
                             Termin freierTermin = new Termin(name, overlapStart, overlapStart.plusMinutes(dauer));
                             if(!freieTermine.contains(freierTermin)) {
                                 freieTermine.add(freierTermin);
+                                break;
                             }
                         }
                     }
-                }
-            }
         }
         Termin[] freieTermineArray = new Termin[freieTermine.size()];
         freieTermine.toArray(freieTermineArray);

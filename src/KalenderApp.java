@@ -97,12 +97,12 @@ public class KalenderApp{
 
                     Termin terminV3 = new Termin("SoftSkills", LocalDateTime.of(2024, 4, 26, 10, 0),
                             LocalDateTime.of(2024, 4, 26, 12, 0));
-                    Termin terminV4 = new Termin("SoftSkill", LocalDateTime.of(2024, 4, 26, 14, 0),
-                            LocalDateTime.of(2024, 4, 26, 16, 0));
+//                    Termin terminV4 = new Termin("SoftSkill", LocalDateTime.of(2024, 4, 26, 14, 0),
+//                            LocalDateTime.of(2024, 4, 26, 16, 0));
                     kalender1.addTermin(terminV1);
                     kalender1.addTermin(terminV2);
                     kalender1.addTermin(terminV3);
-                    kalender1.addTermin(terminV4);
+                    //kalender1.addTermin(terminV4);
 
                     Kalender kalender2 = new Kalender("Freizeit");
 //                    Termin terminF0 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 8, 00),
@@ -114,13 +114,13 @@ public class KalenderApp{
 
                     Termin terminF2 = new Termin("Zahnarzt", LocalDateTime.of(2024, 4, 26, 10, 0),
                             LocalDateTime.of(2024, 04, 26, 12, 0));
-                    Termin terminF3 = new Termin("Kochen", LocalDateTime.of(2024, 4, 26, 14, 0),
-                            LocalDateTime.of(2024, 4, 26, 16, 0));
+//                    Termin terminF3 = new Termin("Kochen", LocalDateTime.of(2024, 4, 26, 14, 0),
+//                            LocalDateTime.of(2024, 4, 26, 16, 0));
                     //kalender2.addTermin(terminF0);
                     kalender2.addTermin(terminF00);
                     //kalender2.addTermin(terminF1);
                     kalender2.addTermin(terminF2);
-                    kalender2.addTermin(terminF3);
+                    //kalender2.addTermin(terminF3);
 
                     Termin[] freieTermine = kalender1.freieTermineFinden(kalender2, LocalDate.of(2024, 4, 25),
                             LocalDate.of(2024, 4, 26), LocalTime.of(8, 0), LocalTime.of(16, 0),
