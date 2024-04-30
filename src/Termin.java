@@ -39,9 +39,8 @@ public class Termin {
             if(!this.getEnde().isAfter(termin.getStart())) return true;
             else return false;
         }
-
-
     }
+
     public void setName(String name){
         if(!name.isEmpty()){
             this.name = name;

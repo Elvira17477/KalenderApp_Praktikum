@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class Kalender{
     private String name;
@@ -63,9 +62,10 @@ public class Kalender{
                 LocalTime endZeit = startZeit.plusMinutes(dauer);
                 LocalDateTime startDate = startDatum.plusDays(i).atTime(startZeit);
                 LocalDateTime endDate = startDatum.plusDays(i).atTime(endZeit);
-
-                Termin termin = new Termin(name, startDate, endDate);
-                testTermine.add(termin);
+                if(endZeit.isBefore(bis)) {
+                    Termin termin = new Termin(name, startDate, endDate);
+                    testTermine.add(termin);
+                }
             }
         }
 
@@ -82,7 +82,7 @@ public class Kalender{
     }
 
     public boolean passtTerminInKalender(Termin test){
-        for(Termin termin :this.termine){
+        for(Termin termin : this.termine){
             if(!termin.TermineNichtUeberschneiden(test)) return false;
         }
         return true;

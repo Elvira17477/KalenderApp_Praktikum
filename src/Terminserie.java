@@ -13,6 +13,13 @@ public class Terminserie {
             termine[i] = new Termin(name, neuerStart, neuesEnde);              //anzahl terminobjekte erzeugen und initialisieren
         }
     }
+
+    public boolean serienNichtUeberschneiden(Terminserie serie) {
+        if (serie == null) return true;
+
+        return false;
+    }
+
     public void setName(String name){
         this.name = name;
 

@@ -60,8 +60,8 @@ public class KalenderApp{
                     }
                     break;
                 case 5:
-                    String nameserie = scan.nextLine();
                     System.out.println("Bitte geben Sie den Kalender an, zu dem die Terminserie hinzugefügt werden soll: ");
+                    String nameserie = scan.nextLine();
                     if(Kalenderserie.kalenderExistiert(nameserie)) {
                         Kalenderserie.serieHinzufuegen(nameserie);
                     }else{
@@ -72,7 +72,7 @@ public class KalenderApp{
                     System.out.println("Bitte geben Sie den Kalender an, dessen Termine ausgegeben werden sollen: ");
                     String kname = scan.nextLine();
                     if(Kalenderserie.kalenderExistiert(kname)) {
-                        //Kalender.ausgeben(kname);
+                        Kalender.ausgeben(kname);
                     }else{
                         System.out.println("Der Kalender wurde nicht gefunden.");
                     }
@@ -91,6 +91,7 @@ public class KalenderApp{
                 case 8:
                     Termin[] freieTermine = testeKalenderVergleich();
                     System.out.println("Freie Termine:\n");
+
                     for(Termin termin : freieTermine){
                         System.out.println(termin.getInfo());
                     }
@@ -112,15 +113,18 @@ public class KalenderApp{
         Kalender kalender1 = new Kalender("Vorlesungen");
         Termin terminV1 = new Termin("EIDOP", LocalDateTime.of(2024, 4, 25, 8, 0),
                 LocalDateTime.of(2024, 4, 25, 10, 0));
-        Termin terminV2 = new Termin("Mathe", LocalDateTime.of(2024, 4, 25, 12, 0),
+        Termin terminV2 = new Termin("Matlab", LocalDateTime.of(2024, 4, 25, 12, 0),
                 LocalDateTime.of(2024, 4, 25, 14, 0));
 
         Termin terminV3 = new Termin("SoftSkills", LocalDateTime.of(2024, 4, 26, 10, 0),
                 LocalDateTime.of(2024, 4, 26, 12, 0));
+        Terminserie terminserie1 = new Terminserie(7, "KI", LocalDateTime.of(2024, 4, 26, 14, 30),
+                LocalDateTime.of(2024, 3, 28, 16, 30), 7);
 
         kalender1.addTermin(terminV1);
         kalender1.addTermin(terminV2);
         kalender1.addTermin(terminV3);
+        kalender1.addSerie(terminserie1);
 
         Kalender kalender2 = new Kalender("Freizeit");
         Termin terminF0 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 8, 00),

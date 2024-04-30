@@ -1,6 +1,8 @@
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Scanner;
+import static java.time.LocalDateTime.parse;
 
 public class Kalenderserie {
     private static Kalenderserie kalenderserie;
@@ -47,18 +49,29 @@ public class Kalenderserie {
         Scanner scan = new Scanner(System.in);
 
         for (int i = 0; i < kalenderarray.length; i++) {
-            if(Objects.equals(kalenderarray[i].getName(), kalendername)){
+            if(Objects.equals(kalenderarray[i].getName(), kalendername)) {
 
                 System.out.println("Bitte geben Sie den Terminnamen an: ");
                 String termin = scan.nextLine();
 
-                System.out.println("Bitte geben Sie das Startdatum an (\"YYYY-MM-DD HH:MM\"): ");
-                String startdatum = scan.nextLine();
-                java.time.LocalDateTime parsedstart = LocalDateTime.parse(startdatum.replace(" ", "T"));
+                boolean startdatumValide = false;
+                LocalDateTime parsedstart = null;
 
-                System.out.println("Bitte geben Sie das Enddatum an (\"YYYY-MM-DD HH:MM\"): ");
+                while(!startdatumValide){
+                    System.out.println("Bitte geben Sie das Startdatum an (\"YYYY-MM-DD HH:mm\"): ");
+                    String startdatum = scan.nextLine();
+
+                    if(startdatum.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}")){
+                        parsedstart = parse(startdatum.replace(" ", "T"));
+                        startdatumValide = true;
+                    }else{
+                        System.out.println("Bitte geben Sie ein valides Startdatum der Form \"YYYY-MM-DD HH:mm\" an.");
+                    }
+                }
+
+                System.out.println("Bitte geben Sie das Enddatum an (\"YYYY-MM-DD HH:mm\"): ");
                 String enddatum = scan.nextLine();
-                java.time.LocalDateTime parsedend = LocalDateTime.parse(enddatum.replace(" ", "T"));
+                LocalDateTime parsedend = parse(enddatum.replace(" ", "T"));
 
                 Termin neuerTermin = new Termin(termin, parsedstart, parsedend);
                 kalenderarray[i].addTermin(neuerTermin);
@@ -75,17 +88,18 @@ public class Kalenderserie {
 
                 System.out.println("Bitte geben Sie Terminanzahl an: ");
                 int anzahl = scan.nextInt();
+                scan.nextLine();
 
                 System.out.println("Bitte geben Sie den Terminnamen an: ");
                 String termin = scan.nextLine();
 
-                System.out.println("Bitte geben Sie das Startdatum an: ");
+                System.out.println("Bitte geben Sie das Startdatum an (YYYY-MM-DD HH:mm): ");
                 String startdatum = scan.nextLine();
-                java.time.LocalDateTime parsedstart = LocalDateTime.parse(startdatum.replace("T", " "));
+                LocalDateTime parsedstart = parse(startdatum.replace(" ", "T"));
 
-                System.out.println("Bitte geben Sie das Enddatum an: ");
+                System.out.println("Bitte geben Sie das Enddatum an (YYYY-MM-DD HH:mm): ");
                 String enddatum = scan.nextLine();
-                java.time.LocalDateTime parsedend = LocalDateTime.parse(enddatum.replace("T", " "));
+                LocalDateTime parsedend = parse(enddatum.replace(" ", "T"));
 
                 System.out.println("Bitte geben Sie das Intervall an: ");
                 int intervall = scan.nextInt();
@@ -102,6 +116,7 @@ public class Kalenderserie {
         for (int i = 0; i < kalenderarray.length; i++) {
             if(Objects.equals(kalenderarray[i].getName(), name)){
                 kalenderarray[i].setName(neuername);
+                break;
             }
         }
     }
