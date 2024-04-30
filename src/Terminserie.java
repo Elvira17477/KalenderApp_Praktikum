@@ -14,12 +14,6 @@ public class Terminserie {
         }
     }
 
-    public boolean serienNichtUeberschneiden(Terminserie serie) {
-        if (serie == null) return true;
-
-        return false;
-    }
-
     public void setName(String name){
         this.name = name;
 

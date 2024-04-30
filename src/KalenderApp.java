@@ -3,7 +3,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Scanner;
 
-
 public class KalenderApp{
     public static void Benutzereingabe(){
         Scanner scan = new Scanner(System.in);
@@ -118,22 +117,19 @@ public class KalenderApp{
 
         Termin terminV3 = new Termin("SoftSkills", LocalDateTime.of(2024, 4, 26, 10, 0),
                 LocalDateTime.of(2024, 4, 26, 12, 0));
-        Terminserie terminserie1 = new Terminserie(7, "KI", LocalDateTime.of(2024, 4, 26, 14, 30),
-                LocalDateTime.of(2024, 3, 28, 16, 30), 7);
 
         kalender1.addTermin(terminV1);
         kalender1.addTermin(terminV2);
         kalender1.addTermin(terminV3);
-        kalender1.addSerie(terminserie1);
 
         Kalender kalender2 = new Kalender("Freizeit");
-        Termin terminF0 = new Termin("Klettern", LocalDateTime.of(2024, 04, 25, 8, 00),
-                LocalDateTime.of(2024, 04, 25, 10, 00));
-        Termin terminF1 = new Termin("Lernen", LocalDateTime.of(2024, 4, 25, 14, 0),
-                LocalDateTime.of(2024, 4, 25, 16, 0));
+        Termin terminF0 = new Termin("Klettern", LocalDateTime.of(2024, 4, 25, 8, 0),
+                LocalDateTime.of(2024, 4, 25, 10, 0));
+        Termin terminF1 = new Termin("Lernen", LocalDateTime.of(2024, 4, 25, 12, 0),
+                LocalDateTime.of(2024, 4, 25, 14, 0));
 
         Termin terminF2 = new Termin("Zahnarzt", LocalDateTime.of(2024, 4, 26, 10, 0),
-                LocalDateTime.of(2024, 04, 26, 12, 0));
+                LocalDateTime.of(2024, 4, 26, 12, 0));
 
         kalender2.addTermin(terminF0);
         kalender2.addTermin(terminF1);

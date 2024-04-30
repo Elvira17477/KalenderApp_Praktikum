@@ -57,23 +57,25 @@ public class Kalender{
         long zeitraeumeProTag = Duration.between(ab, bis).toMinutes() / 30;
 
         for (int i = 0; i <= zeitraum; i++) {
-            for(long j = 0; j < zeitraeumeProTag; j++){
+            for(long j = 0; j <= zeitraeumeProTag; j++){
                 LocalTime startZeit = ab.plusMinutes(j * 30);
                 LocalTime endZeit = startZeit.plusMinutes(dauer);
                 LocalDateTime startDate = startDatum.plusDays(i).atTime(startZeit);
                 LocalDateTime endDate = startDatum.plusDays(i).atTime(endZeit);
+
                 if(endZeit.isBefore(bis)) {
                     Termin termin = new Termin(name, startDate, endDate);
                     testTermine.add(termin);
                 }
             }
         }
-
         ArrayList<Termin> ergebnisliste = new ArrayList<>();
 
         for(Termin test: testTermine){
-            if(this.passtTerminInKalender(test) && kalender2.passtTerminInKalender((test))){
-                ergebnisliste.add(test);
+            if(this.passtTerminInKalender(test)){
+                if(kalender2.passtTerminInKalender(test)) {
+                    ergebnisliste.add(test);
+                }
             }
         }
         Termin[] freieTermine = new Termin[ergebnisliste.size()];
@@ -82,7 +84,7 @@ public class Kalender{
     }
 
     public boolean passtTerminInKalender(Termin test){
-        for(Termin termin : this.termine){
+        for(Termin termin : termine){
             if(!termin.TermineNichtUeberschneiden(test)) return false;
         }
         return true;

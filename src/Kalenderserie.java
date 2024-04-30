@@ -1,4 +1,3 @@
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Scanner;
@@ -56,7 +55,6 @@ public class Kalenderserie {
 
                 boolean startdatumValide = false;
                 LocalDateTime parsedstart = null;
-
                 while(!startdatumValide){
                     System.out.println("Bitte geben Sie das Startdatum an (\"YYYY-MM-DD HH:mm\"): ");
                     String startdatum = scan.nextLine();
@@ -69,9 +67,18 @@ public class Kalenderserie {
                     }
                 }
 
-                System.out.println("Bitte geben Sie das Enddatum an (\"YYYY-MM-DD HH:mm\"): ");
-                String enddatum = scan.nextLine();
-                LocalDateTime parsedend = parse(enddatum.replace(" ", "T"));
+                boolean enddatumValide = false;
+                LocalDateTime parsedend = null;
+                while(!enddatumValide){
+                    System.out.println("Bitte geben Sie das Enddatum an (\"YYYY-MM-DD HH:mm\"): ");
+                    String enddatum = scan.nextLine();
+                    if(enddatum.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}")){
+                        parsedend = parse(enddatum.replace(" ", "T"));
+                        enddatumValide = true;
+                    }else{
+                        System.out.println("Bitte geben Sie ein valides Enddatum der Form \"YYYY-MM-DD HH:mm\" an.");
+                    }
+                }
 
                 Termin neuerTermin = new Termin(termin, parsedstart, parsedend);
                 kalenderarray[i].addTermin(neuerTermin);
@@ -93,13 +100,31 @@ public class Kalenderserie {
                 System.out.println("Bitte geben Sie den Terminnamen an: ");
                 String termin = scan.nextLine();
 
-                System.out.println("Bitte geben Sie das Startdatum an (YYYY-MM-DD HH:mm): ");
-                String startdatum = scan.nextLine();
-                LocalDateTime parsedstart = parse(startdatum.replace(" ", "T"));
+                boolean startdatumValide = false;
+                LocalDateTime parsedstart = null;
+                while(!startdatumValide){
+                    System.out.println("Bitte geben Sie das Startdatum an (\"YYYY-MM-DD HH:mm\"): ");
+                    String startdatum = scan.nextLine();
 
-                System.out.println("Bitte geben Sie das Enddatum an (YYYY-MM-DD HH:mm): ");
-                String enddatum = scan.nextLine();
-                LocalDateTime parsedend = parse(enddatum.replace(" ", "T"));
+                    if(startdatum.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}")){
+                        parsedstart = parse(startdatum.replace(" ", "T"));
+                        startdatumValide = true;
+                    }else{
+                        System.out.println("Bitte geben Sie ein valides Startdatum der Form \"YYYY-MM-DD HH:mm\" an.");
+                    }
+                }
+                boolean enddatumValide = false;
+                LocalDateTime parsedend = null;
+                while(!enddatumValide){
+                    System.out.println("Bitte geben Sie das Enddatum an (\"YYYY-MM-DD HH:mm\"): ");
+                    String enddatum = scan.nextLine();
+                    if(enddatum.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}")){
+                        parsedend = parse(enddatum.replace(" ", "T"));
+                        enddatumValide = true;
+                    }else{
+                        System.out.println("Bitte geben Sie ein valides Enddatum der Form \"YYYY-MM-DD HH:mm\" an.");
+                    }
+                }
 
                 System.out.println("Bitte geben Sie das Intervall an: ");
                 int intervall = scan.nextInt();
