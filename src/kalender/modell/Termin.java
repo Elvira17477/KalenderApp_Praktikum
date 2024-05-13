@@ -1,6 +1,6 @@
+package kalender.modell;
+
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class Termin {
@@ -8,27 +8,56 @@ public class Termin {
     private java.time.LocalDateTime start;
     private java.time.LocalDateTime ende;
 
+    /**
+     * Konstruktor für die Erstellung eines Termins mit einem bestimmten Namen, Start- und Enddatum.
+     * @param name Der Name des Termins.
+     * @param start Das Startdatum des Termins.
+     * @param ende Das Enddatum des Termins.
+     */
     public Termin(String name, java.time.LocalDateTime start, java.time.LocalDateTime ende){
         this.name = name;
         this.start = start;
         this.ende = ende;
     }
+
+    /**
+     * Berechnet die Dauer des Termins in Minuten.
+     * @return Die Dauer des Termins in Minuten.
+     */
     public int getDauer(){
         long duration = Duration.between(start, ende).toMinutes();  //Abstand start - ende in minuten
         return Long.valueOf(duration).intValue();
     }
+
+    /**
+     * Gibt den Namen des Termins zurück.
+     * @return Der Name des Termins.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gibt das Startdatum des Termins zurück.
+     * @return Das Startdatum des Termins.
+     */
     public java.time.LocalDateTime getStart(){
         return start;
     }
+
+    /**
+     * Gibt das Enddatum des Termins zurück.
+     * @return Das Enddatum des Termins.
+     */
     public java.time.LocalDateTime getEnde(){
         return ende;
     }
 
-    //prüfen, ob sich die Termine überschneiden
+    /**
+     * Überprüft, ob sich dieser Termin nicht mit einem anderen überschneidet.
+     * @param termin Der zu überprüfende Termin.
+     * @return true, wenn sich die Termine nicht überschneiden, ansonsten false.
+     */
     public boolean TermineNichtUeberschneiden(Termin termin){
         if(termin == null) return true;
         if(!termin.getStart().isAfter(this.getStart())){
@@ -41,11 +70,20 @@ public class Termin {
         }
     }
 
+    /**
+     * Setzt den Namen des Termins.
+     * @param name Der neue Name des Termins.
+     */
     public void setName(String name){
         if(!name.isEmpty()){
             this.name = name;
         }
     }
+
+    /**
+     * Gibt Informationen über den Termin in einem formatierten String zurück.
+     * @return Informationen über den Termin.
+     */
     public String getInfo(){
         DateTimeFormatter startFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  hh:mm"); //Startdatum formatieren
         String formattedStart = start.format(startFormatter);                                //Startdatum in gewünschtes Format konvertieren
@@ -54,18 +92,5 @@ public class Termin {
         int dauer = getDauer();
 
         return (name + "\tStart: " + formattedStart + "\t\tEnde: " + formattedEnd + "\t\tDauer: " + dauer);
-    }
-
-    public LocalDate getStartDate() {
-        return start.toLocalDate();
-    }
-    public LocalDate getEndDate() {
-        return ende.toLocalDate();
-    }
-    public LocalTime getStartTime() {
-        return start.toLocalTime();
-    }
-    public LocalTime getEndTime() {
-        return ende.toLocalTime();
     }
 }
