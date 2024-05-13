@@ -129,7 +129,6 @@ public class Kalenderserie {
 
                 Termin neuerTermin = new Termin(termin, parsedstart, parsedend);
                 kalenderarray[i].addTermin(neuerTermin);
-                //System.out.println("Der kalender.modell.Termin " + termin + " wurde zum kalender.modell.Kalender '" + kalendername + "' hinzugefügt.");
                 return;
             }
         }

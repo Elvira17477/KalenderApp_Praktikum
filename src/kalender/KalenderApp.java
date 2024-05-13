@@ -30,7 +30,7 @@ public class KalenderApp{
      * Diese Methode ermöglicht Benutzereingaben und steuert die Interaktion mit der Kalenderanwendung.
      * Die Eingaben des Benutzers werden ausgewertet und die ausgewählten Methodenaufrufe werden durchgeführt.
      */
-        public static void Benutzereingabe(){
+        public static void Benutzereingabe() throws Exception {
             Scanner scan = new Scanner(System.in);
             boolean nichtBeenden = true;
 
