@@ -29,7 +29,7 @@ public class Kalenderserie {
      * Privater Konstruktor, der ein neues Kalenderarray mit einer bestimmten Größe initialisiert.
      */
     private Kalenderserie(){
-        kalenderarray = new Kalender[10];
+        kalenderarray = new Kalender[12];
     }
 
     /**

@@ -10,13 +10,16 @@ public class GruppenKalender extends Kalender{
      * @param name Der Name des Gruppenkalenders.
      * @param mitglieder Die Liste der Mitglieder der Gruppe.
      */
-    public GruppenKalender(String name, String[] mitglieder) throws Exception {
+    public GruppenKalender(String name, String[] mitglieder){
         super(name);
-        this.mitglieder = new String[10];
+        if (mitglieder.length > 10) {
+            throw new IllegalArgumentException("Die maximale Anzahl von 10 Mitgliedern wurde überschritten.");
+        }
+        this.mitglieder = mitglieder;
     }
 
-    public void addMitglied(String name){
-
+    public String[] getMitglieder() {
+        return mitglieder;
     }
 
     /**

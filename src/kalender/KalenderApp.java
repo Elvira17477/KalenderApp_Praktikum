@@ -22,7 +22,9 @@ import java.util.Scanner;
     Dies bedeutet, dass ein Objekt einer Subklasse einer Methode übergeben werden kann, die eine Superklasse
     als Parameter erwartet.*/
 
-
+/*Dynamische Bindung bedeutet, dass wenn anstelle einer Superklasseninstanz Instanzen von Subklassen verwendet werden,
+    dann werden z.B. beim Durchlauf durch das Array und beim Methodenaufruf auf den einzelnen Instanzen dynamisch
+    zur Laufzeit die entsprechenden, in den Subklassen überschriebenen Methoden für jede Instanz aufgerufen */
 
 public class KalenderApp{
 
@@ -30,7 +32,7 @@ public class KalenderApp{
      * Diese Methode ermöglicht Benutzereingaben und steuert die Interaktion mit der Kalenderanwendung.
      * Die Eingaben des Benutzers werden ausgewertet und die ausgewählten Methodenaufrufe werden durchgeführt.
      */
-        public static void Benutzereingabe() throws Exception {
+        public static void Benutzereingabe(){
             Scanner scan = new Scanner(System.in);
             boolean nichtBeenden = true;
 
@@ -54,7 +56,7 @@ public class KalenderApp{
                         System.out.println("Bitte geben Sie eine Kalenderart (1-Raumkalender, 2-Personenkalender, 3-Gruppenkalender) an: ");
                         String kalenderart = scan.nextLine();
 
-                        if (Objects.equals(kalenderart, "1")) {
+                        if (kalenderart.equals("1")) {
                             System.out.println("Bitte geben Sie einen Namen an: ");
                             String rName = scan.nextLine();
                             System.out.println("Bitte geben Sie die Plaetze an: ");

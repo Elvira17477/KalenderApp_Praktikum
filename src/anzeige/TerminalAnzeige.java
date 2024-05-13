@@ -20,7 +20,16 @@ public class TerminalAnzeige extends KalenderAnzeige {
     @Override
     public void ausgeben() {
         System.out.println("Kalender: " + getKalender().getName());
-        System.out.println("Termine:");
+        if(getKalender() instanceof RaumKalender){
+            System.out.println("Plaetze: " + ((RaumKalender) getKalender()).getPlaetze());
+        }
+        if(getKalender() instanceof GruppenKalender){
+            System.out.print("Mitglieder: ");
+            for (String s : (((GruppenKalender) getKalender()).getMitglieder())) {
+                System.out.print(s + " ");
+            }
+        }
+        System.out.println("\nTermine:");
         for (Termin termin : getKalender().getTermine()) {
             System.out.println(termin.getInfo());
         }

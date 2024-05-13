@@ -13,6 +13,10 @@ public class RaumKalender extends Kalender {
         this.plaetze = plaetze;
     }
 
+    public int getPlaetze(){
+        return plaetze;
+    }
+
     /**
      * Überprüft, ob ein Termin zu diesem Raumkalender hinzugefügt werden kann.
      * @param termin Der Termin, der überprüft werden soll.
