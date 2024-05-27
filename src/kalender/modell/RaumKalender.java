@@ -10,6 +10,9 @@ public class RaumKalender extends Kalender {
      */
     public RaumKalender(String name, int plaetze) {
         super(name);
+        if(plaetze <= 0){
+            throw new IllegalArgumentException("Plaetze ist ein Pflichtfeld im Raumkalender.");
+        }
         this.plaetze = plaetze;
     }
 
@@ -23,10 +26,9 @@ public class RaumKalender extends Kalender {
      * @return true, wenn der Termin hinzugefügt werden kann, ansonsten false.
      */
     @Override
-    public boolean pruefeHinzufuegen(Termin termin) {
-        if(!passtTerminInKalender(termin)){
-            return false;
+    public void pruefeHinzufuegen(Termin termin) throws TerminUeberschneidungException {
+        if(!passtTerminInKalender(termin)) {
+            throw new TerminUeberschneidungException(termin);
         }
-        return true;
     }
 }

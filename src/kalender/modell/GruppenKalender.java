@@ -12,6 +12,9 @@ public class GruppenKalender extends Kalender{
      */
     public GruppenKalender(String name, String[] mitglieder){
         super(name);
+        if(mitglieder.length == 0){
+            throw new IllegalArgumentException("Mitglieder ist ein Pflichtfeld im Gruppenkalender.");
+        }
         if (mitglieder.length > 10) {
             throw new IllegalArgumentException("Die maximale Anzahl von 10 Mitgliedern wurde überschritten.");
         }
@@ -28,27 +31,34 @@ public class GruppenKalender extends Kalender{
      * @return {@code true}, wenn der Termin hinzugefügt werden kann, ansonsten {@code false}.
      */
     @Override
-    public boolean pruefeHinzufuegen(Termin termin) {
+    public void pruefeHinzufuegen(Termin termin) throws TerminException {
 
         if (!passtTerminInKalender(termin)) {
-            return false;
+            throw new TerminUeberschneidungException(termin);
         }
 
         for (String mitglied : mitglieder) {
             if(mitglied != null) {
-                PersonenKalender pkalender = PersonenKalender.getKalender(mitglied);
-                if (pkalender.terminVorhanden(mitglied, termin)) {
-                    return false;
+                String[] einzelneMitglieder = mitglied.split(",");
+                for(String einzelMitglied : einzelneMitglieder){
+                    einzelMitglied = einzelMitglied.trim();
+                    PersonenKalender pkalender = PersonenKalender.getKalender(einzelMitglied);
+                    if (pkalender.terminVorhanden(einzelMitglied, termin)) {
+                        throw new PersonNichtVerfuegbarException(einzelMitglied, termin);
+                }
                 }
             }
         }
 
         //termin zu allen Personenkalendern hinzufügen
-        for (int i = 0; i < mitglieder.length; i++) {
-            if(mitglieder[i] != null) {
-                PersonenKalender.getKalender(mitglieder[i]).addTermin(termin);
+        for (String mitglied : mitglieder) {
+            String[] einzelneMitglieder = mitglied.split(",");
+            for(String einzelMitglied : einzelneMitglieder){
+                einzelMitglied = einzelMitglied.trim();
+                if(!einzelMitglied.isEmpty()) {
+                    PersonenKalender.getKalender(einzelMitglied).addTermin(termin);
+                }
             }
         }
-        return true;
     }
 }

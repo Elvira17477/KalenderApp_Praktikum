@@ -9,7 +9,7 @@ import kalender.modell.Kalender;
 public abstract class KalenderAnzeige {
 
     /** Der Kalender, der von dieser Anzeige dargestellt wird. */
-    private final Kalender kalender;
+    private Kalender kalender;
 
     /**
      * Konstruktor, der den Kalender für die Anzeige festlegt.
@@ -26,6 +26,10 @@ public abstract class KalenderAnzeige {
     //Getter, kein Setter da Komposition
     public Kalender getKalender(){
         return kalender;
+    }
+
+    public void setKalender(Kalender kalender) {
+        this.kalender = kalender;
     }
 
     /**

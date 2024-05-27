@@ -15,11 +15,10 @@ import java.util.ArrayList;
  */
 public abstract class Kalender {
     private String name;
-    private Termin[] termine;
-    private Terminserie[] serien;
-    private Termin[] freieTermine;
-    private final KalenderAnzeige kalenderAnzeige = new TerminalAnzeige(this);
-    //private final anzeige.KalenderAnzeige kalenderAnzeige;
+    private ArrayList<Termin> termine;
+    private ArrayList<Terminserie> serien;
+    private ArrayList<Termin> freieTermine;
+    private KalenderAnzeige kalenderAnzeige; //= new TerminalAnzeige(this);
 
     /**
      * Konstruktor für die Initialisierung eines Kalenders mit einem Namen.
@@ -27,17 +26,25 @@ public abstract class Kalender {
      */
     public Kalender(String name) {
         this.name = name;
+        termine = new ArrayList<>();
+        serien = new ArrayList<>();
+        freieTermine = new ArrayList<>();
         //this.kalenderAnzeige = kalenderAnzeige;
-        termine = new Termin[0];     //leeres terminarray
-        serien = new Terminserie[0]; //leeres terminserienarray
-        freieTermine = new Termin[0];
+    }
+
+    /**
+     * Setzt die Kalenderanzeige.
+     * @param kalenderAnzeige Die Kalenderanzeige.
+     */
+    public void setKalenderAnzeige(KalenderAnzeige kalenderAnzeige) {
+        this.kalenderAnzeige = kalenderAnzeige;
     }
 
     /**
      * Gibt alle Termine dieses Kalenders zurück.
      * @return Ein Array aller Termine dieses Kalenders.
      */
-    public Termin[] getTermine() {
+    public ArrayList<Termin> getTermine() {
         return termine;
     }
 
@@ -45,7 +52,7 @@ public abstract class Kalender {
      * Gibt alle Terminserien dieses Kalenders zurück.
      * @return Ein Array aller Terminserien dieses Kalenders.
      */
-    public Terminserie[] getSerien() {
+    public ArrayList<Terminserie> getSerien() {
         return serien;
     }
 
@@ -55,7 +62,7 @@ public abstract class Kalender {
      * @param termin Der zu prüfende Termin.
      * @return true, wenn der Termin hinzugefügt werden kann, ansonsten false.
      */
-    protected abstract boolean pruefeHinzufuegen(Termin termin);
+    protected abstract void pruefeHinzufuegen(Termin termin) throws TerminException;
 
     /**
      * Gibt den Namen dieses Kalenders zurück.
@@ -79,18 +86,10 @@ public abstract class Kalender {
      * Fügt einen neuen Termin zu diesem Kalender hinzu.
      * @param termin Der hinzuzufügende Termin.
      */
-    public void addTermin(Termin termin) {
-        if (pruefeHinzufuegen(termin)) {
-            Termin[] neueTermine = new Termin[termine.length + 1]; //neues array um eine posiion erweitern
-            for (int i = 0; i < termine.length; i++) {             //alle bisherigen Termine kopieren
-                neueTermine[i] = termine[i];
-            }
-            neueTermine[termine.length] = termin;                  //übergebenen kalender.modell.Termin einfügen
-            termine = neueTermine;                                 //attribut termine auf neues array setzen
-            System.out.println("Der Termin wurde zum Kalender hinzugefügt.");
-        } else {
-            System.out.println("Der Termin kann nicht hinzugefügt werden.");
-        }
+    public void addTermin(Termin termin) throws TerminException {
+        pruefeHinzufuegen(termin);
+        termine.add(termin);
+        System.out.println("Der Termin wurde zum Kalender hinzugefügt.");
     }
 
     /**
@@ -98,12 +97,8 @@ public abstract class Kalender {
      * @param serie Die hinzuzufügende Terminserie.
      */
     public void addSerie(Terminserie serie) {
-        Terminserie[] neueTerminserien = new Terminserie[serien.length + 1];
-        for (int i = 0; i < serien.length; i++) {
-            neueTerminserien[i] = serien[i];
-        }
-        neueTerminserien[serien.length] = serie;
-        serien = neueTerminserien;
+        serien.add(serie);
+        System.out.println("Die Terminserie wurde zum Kalender hinzugefügt.");
     }
 
     /**
@@ -117,7 +112,7 @@ public abstract class Kalender {
      * @param name Der Name für die zu erstellenden Termine.
      * @return Ein Array aller gefundenen freien Termine.
      */
-    public Termin[] freieTermineFinden(Kalender kalender2, java.time.LocalDate startDatum, java.time.LocalDate endDatum,
+    public ArrayList<Termin> freieTermineFinden(Kalender kalender2, java.time.LocalDate startDatum, java.time.LocalDate endDatum,
                                        java.time.LocalTime ab, java.time.LocalTime bis, int dauer, String name) {
 
         ArrayList<Termin> testTermine = new ArrayList<>();
@@ -146,9 +141,7 @@ public abstract class Kalender {
                 }
             }
         }
-        Termin[] freieTermine = new Termin[ergebnisliste.size()];
-        freieTermine = ergebnisliste.toArray(freieTermine);
-        return freieTermine;
+        return ergebnisliste;
     }
 
     /**
@@ -162,27 +155,26 @@ public abstract class Kalender {
         }
         return true;
     }
-}
 
 //    public static void ausgeben(String name){
 //
-//        for (int k = 0; k < kalender.modell.Kalenderserie.kalenderarray.length; k++) {
-//            if(kalender.modell.Kalenderserie.kalenderarray[k] != null && Objects.equals(kalender.modell.Kalenderserie.kalenderarray[k].getName(), name)){
+//        for (int k = 0; k < kalender.modell.Kalenderserie.kalenderarray.size(); k++) {
+//            if(Kalenderserie.kalenderarray.get(k) != null && Kalenderserie.kalenderarray.get(k).getName().equals(name)){
 //
 //                System.out.println("\n" + name + " ");
 //                System.out.println("Termine:");
-//                for (int i = 0; i < termine.length; i++) {
-//                    System.out.println(termine[i].getInfo());
+//                for (int i = 0; i < termine.size(); i++) {
+//                    System.out.println(termine.get(i).getInfo());
 //                }
 //
 //                System.out.println("\nTerminserien:");
-//                for (int i = 0; i < serien.length; i++) {                     //array serien enthält Terminserien arrays
+//                for (int i = 0; i < serien.size(); i++) {                     //array serien enthält Terminserien arrays
 //                    //System.out.println("Serie: " + serien[i].getName());
-//                    for (int j = 0; j < serien[i].getAnzahl(); j++) {         //anzahl der Terminserien im array durchlaufen
-//                        System.out.println(serien[i].getTermin(j).getInfo()); //je serie jede Termininfo ausgeben
+//                    for (int j = 0; j < serien.get(i).getAnzahl(); j++) {         //anzahl der Terminserien im array durchlaufen
+//                        System.out.println(serien.get(i).getTermin(j).getInfo()); //je serie jede Termininfo ausgeben
 //                    }
 //                }
 //            }
 //        }
 //    }
-//}
+}

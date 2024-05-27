@@ -17,6 +17,9 @@ public class PersonenKalender extends Kalender{
      */
     public PersonenKalender(String name, String besitzer) {
         super(name);
+        if(besitzer == null){
+            throw new IllegalArgumentException("Besitzer ist ein Pflichtfeld im Personenkalender.");
+        }
         this.besitzer = besitzer;
         addPersonenKalender(this);
     }
@@ -75,7 +78,6 @@ public class PersonenKalender extends Kalender{
      * @return true, wenn der Termin hinzugefügt werden kann, ansonsten false.
      */
     @Override
-    public boolean pruefeHinzufuegen(Termin termin) {
-        return true;
+    public void pruefeHinzufuegen(Termin termin){
     }
 }

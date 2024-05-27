@@ -1,9 +1,11 @@
 package kalender.modell;
 
 
+import java.util.ArrayList;
+
 public class Terminserie {
     private String name;
-    private final Termin[] termine;
+    private final ArrayList<Termin> termine;
 
     /**
      * Konstruktor zur Erstellung einer Terminserie mit der Anzahl von Terminen, Namen, Start- und Enddatum sowie dem Intervall.
@@ -14,12 +16,23 @@ public class Terminserie {
      * @param intervall Das Intervall zwischen den Terminen in Tagen.
      */
     public Terminserie(int anzahl, String name, java.time.LocalDateTime start, java.time.LocalDateTime ende, int intervall){
-        termine = new Termin[anzahl];
+        if(anzahl <= 0 || intervall <= 0){
+            throw new IllegalArgumentException("Die Anzahl der Termine und die Intervallgroeße muessen größer als Null sein.");
+        }
+        if(start == null || ende == null){
+            throw new IllegalArgumentException("Das Start- und Enddatum sind Pflichtfelder.");
+        }
+        if(!start.isBefore(ende)){
+            throw new IllegalArgumentException("Das Startdatum der Terminserie muss vor dem Enddatum liegen.");
+        }
+        termine = new ArrayList<>(anzahl);
+
+        this.name = name;
 
         for (int i = 0; i < anzahl; i++) {
             java.time.LocalDateTime neuerStart = start.plusDays((long) i * intervall); //termindaten in intervallabständen berechnen
             java.time.LocalDateTime neuesEnde = ende.plusDays((long) i * intervall);
-            termine[i] = new Termin(name, neuerStart, neuesEnde);              //anzahl terminobjekte erzeugen und initialisieren
+            termine.add(new Termin(name, neuerStart, neuesEnde));              //anzahl terminobjekte erzeugen und initialisieren
         }
     }
 
@@ -30,8 +43,8 @@ public class Terminserie {
     public void setName(String name){
         this.name = name;
 
-        for (int i = 0; i < termine.length; i++) {
-            termine[i].setName(name);  //namen aller einzeltermine aktualisieren
+        for (int i = 0; i < termine.size(); i++) {
+            termine.get(i).setName(name);  //namen aller einzeltermine aktualisieren
         }
     }
 
@@ -41,8 +54,8 @@ public class Terminserie {
      * @return Der Termin an dem angegebenen Index.
      */
     public Termin getTermin(int index){
-        if(index >= 0 && index < termine.length){
-            return termine[index];
+        if(index >= 0 && index < termine.size()){
+            return termine.get(index);
         }
         return null;
     }
@@ -52,7 +65,7 @@ public class Terminserie {
      * @return Die Anzahl der Termine in der Serie.
      */
     public int getAnzahl(){
-        return termine.length;
+        return termine.size();
     }
 
     /**
