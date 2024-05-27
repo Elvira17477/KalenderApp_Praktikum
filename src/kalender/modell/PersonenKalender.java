@@ -17,7 +17,10 @@ public class PersonenKalender extends Kalender{
      */
     public PersonenKalender(String name, String besitzer) {
         super(name);
-        if(besitzer == null){
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name ist ein Pflichtfeld im Personenkalender.");
+        }
+        if(besitzer == null || besitzer.isEmpty()){
             throw new IllegalArgumentException("Besitzer ist ein Pflichtfeld im Personenkalender.");
         }
         this.besitzer = besitzer;

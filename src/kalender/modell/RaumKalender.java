@@ -10,8 +10,11 @@ public class RaumKalender extends Kalender {
      */
     public RaumKalender(String name, int plaetze) {
         super(name);
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name ist Pflichtfeld im Raumkalender.");
+        }
         if(plaetze <= 0){
-            throw new IllegalArgumentException("Plaetze ist ein Pflichtfeld im Raumkalender.");
+            throw new IllegalArgumentException("Plätze ist Pflichtfeld im Raumkalender.");
         }
         this.plaetze = plaetze;
     }

@@ -12,8 +12,8 @@ public class GruppenKalender extends Kalender{
      */
     public GruppenKalender(String name, String[] mitglieder){
         super(name);
-        if(mitglieder.length == 0){
-            throw new IllegalArgumentException("Mitglieder ist ein Pflichtfeld im Gruppenkalender.");
+        if(mitglieder.length == 0 || name == null || name.isEmpty()){
+            throw new IllegalArgumentException("Mitglieder und Name sind Pflichtfelder im Gruppenkalender.");
         }
         if (mitglieder.length > 10) {
             throw new IllegalArgumentException("Die maximale Anzahl von 10 Mitgliedern wurde überschritten.");

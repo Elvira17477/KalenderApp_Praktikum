@@ -128,14 +128,17 @@ public class KalenderFenster extends KalenderAnzeige {
                 String kalendername = kalenderName.getText();
                 String kalenderplaetze = plaetze.getText();
                 try {
-                    RaumKalender raumkalender = new RaumKalender(kalendername, Integer.parseInt(kalenderplaetze));
+                    int kalenderp = Integer.parseInt(kalenderplaetze);
+                    RaumKalender raumkalender = new RaumKalender(kalendername, kalenderp);
                     Kalenderserie.addKalender(raumkalender);
                     kalenderName.setText("");
                     plaetze.setText("");
                     fehlermeldung.setText("");
                     kalenderChoice.add(kalendername);
                     aktualisiereTerminListe(raumkalender);
-                }catch (Exception ex){
+                }catch (NumberFormatException ex) {
+                    fehlermeldung.setText("Fehler beim Erstellen des Kalenders: Plätze muss eine gültige Zahl sein.");
+                }catch (IllegalArgumentException ex) {
                     fehlermeldung.setText("Fehler beim Erstellen des Kalenders: " + ex.getMessage());
                 }
             }
@@ -154,8 +157,8 @@ public class KalenderFenster extends KalenderAnzeige {
                     fehlermeldung.setText("");
                     kalenderChoice.add(kalendername);
                     aktualisiereTerminListe(personenKalender);
-                }catch(Exception ex){
-                    fehlermeldung.setText("Fehler beim Erstellen des Kalenders: " + ex.getMessage());
+                }catch(IllegalArgumentException exeption){
+                    fehlermeldung.setText("Fehler beim Erstellen des Kalenders: " + exeption.getMessage());
                 }
             }
         });
@@ -165,8 +168,8 @@ public class KalenderFenster extends KalenderAnzeige {
             public void actionPerformed(ActionEvent e) {
                 String kalendername = kalenderName.getText();
                 String[] kalendermitglieder = new String[]{mitglieder.getText()};
-                GruppenKalender gruppenKalender = new GruppenKalender(kalendername, kalendermitglieder);
                 try {
+                    GruppenKalender gruppenKalender = new GruppenKalender(kalendername, kalendermitglieder);
                     Kalenderserie.addKalender(gruppenKalender);
                     kalenderName.setText("");
                     mitglieder.setText("");
@@ -174,7 +177,7 @@ public class KalenderFenster extends KalenderAnzeige {
                     kalenderChoice.add(kalendername);
                     aktualisiereTerminListe(gruppenKalender);
                 }catch (Exception ex){
-                    fehlermeldung.setText("Fehler beim Erstellen des Kalenders:" + ex.getMessage());
+                    fehlermeldung.setText("Fehler beim Erstellen des Kalenders: " + ex.getMessage());
                 }
             }
         });

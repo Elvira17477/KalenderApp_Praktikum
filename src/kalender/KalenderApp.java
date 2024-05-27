@@ -114,7 +114,6 @@ public class KalenderApp {
                                         " ueberschneidende Termine.");
                             } catch (Exception e) {
                                 System.out.println("Der Termin kann nicht hinzugefuegt werden.");
-                                ;
                             }
                         } else {
                             System.out.println("Der Kalender wurde nicht gefunden.");
