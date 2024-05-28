@@ -181,6 +181,7 @@ public class KalenderApp {
      */
     public static void main(String[] args) {
         Kalenderserie.getInstance();
+
         KalenderFenster fenster = new KalenderFenster();
         fenster.ausgeben();
 

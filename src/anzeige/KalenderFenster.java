@@ -122,7 +122,6 @@ public class KalenderFenster extends KalenderAnzeige {
             }
         });
 
-        // ActionListener für Kalenderauswahl
         raumKalenderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -130,13 +129,17 @@ public class KalenderFenster extends KalenderAnzeige {
                 String kalenderplaetze = plaetze.getText();
                 try {
                     int kalenderp = Integer.parseInt(kalenderplaetze);
-                    RaumKalender raumkalender = new RaumKalender(kalendername, kalenderp);
-                    Kalenderserie.addKalender(raumkalender);
-                    kalenderName.setText("");
-                    plaetze.setText("");
-                    fehlermeldung.setText("");
-                    kalenderChoice.add(kalendername);
-                    aktualisiereTerminListe(raumkalender);
+                    if(!Kalenderserie.kalenderExistiert(kalendername)) {
+                        RaumKalender raumkalender = new RaumKalender(kalendername, kalenderp);
+                        Kalenderserie.addKalender(raumkalender);
+                        kalenderName.setText("");
+                        plaetze.setText("");
+                        fehlermeldung.setText("");
+                        kalenderChoice.add(kalendername);
+                        aktualisiereTerminListe(raumkalender);
+                    }else{
+                        throw new IllegalArgumentException("Der Kalender ist schon vorhanden.");
+                    }
                 }catch (NumberFormatException ex) {
                     fehlermeldung.setText("Fehler beim Erstellen des Kalenders: Plätze muss eine gültige Zahl sein.");
                 }catch (IllegalArgumentException ex) {
@@ -151,13 +154,17 @@ public class KalenderFenster extends KalenderAnzeige {
                 String kalendername = kalenderName.getText();
                 String kalenderbesizer = besitzer.getText();
                 try {
-                    PersonenKalender personenKalender = new PersonenKalender(kalendername, kalenderbesizer);
-                    Kalenderserie.addKalender(personenKalender);
-                    kalenderName.setText("");
-                    besitzer.setText("");
-                    fehlermeldung.setText("");
-                    kalenderChoice.add(kalendername);
-                    aktualisiereTerminListe(personenKalender);
+                    if(!Kalenderserie.kalenderExistiert(kalendername)) {
+                        PersonenKalender personenKalender = new PersonenKalender(kalendername, kalenderbesizer);
+                        Kalenderserie.addKalender(personenKalender);
+                        kalenderName.setText("");
+                        besitzer.setText("");
+                        fehlermeldung.setText("");
+                        kalenderChoice.add(kalendername);
+                        aktualisiereTerminListe(personenKalender);
+                    }else{
+                        throw new IllegalArgumentException("Der Kalender ist schon vorhanden.");
+                    }
                 }catch(IllegalArgumentException exeption){
                     fehlermeldung.setText("Fehler beim Erstellen des Kalenders: " + exeption.getMessage());
                 }
@@ -170,13 +177,17 @@ public class KalenderFenster extends KalenderAnzeige {
                 String kalendername = kalenderName.getText();
                 String[] kalendermitglieder = new String[]{mitglieder.getText()};
                 try {
-                    GruppenKalender gruppenKalender = new GruppenKalender(kalendername, kalendermitglieder);
-                    Kalenderserie.addKalender(gruppenKalender);
-                    kalenderName.setText("");
-                    mitglieder.setText("");
-                    fehlermeldung.setText("");
-                    kalenderChoice.add(kalendername);
-                    aktualisiereTerminListe(gruppenKalender);
+                    if(!Kalenderserie.kalenderExistiert(kalendername)) {
+                        GruppenKalender gruppenKalender = new GruppenKalender(kalendername, kalendermitglieder);
+                        Kalenderserie.addKalender(gruppenKalender);
+                        kalenderName.setText("");
+                        mitglieder.setText("");
+                        fehlermeldung.setText("");
+                        kalenderChoice.add(kalendername);
+                        aktualisiereTerminListe(gruppenKalender);
+                    }else{
+                        throw new IllegalArgumentException("Der Kalender ist schon vorhanden.");
+                    }
                 }catch (Exception ex){
                     fehlermeldung.setText("Fehler beim Erstellen des Kalenders: " + ex.getMessage());
                 }
