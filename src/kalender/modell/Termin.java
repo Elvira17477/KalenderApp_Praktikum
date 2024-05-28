@@ -3,6 +3,7 @@ package kalender.modell;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Termin {
     private String name;
@@ -16,10 +17,9 @@ public class Termin {
      * @param ende Das Enddatum des Termins.
      */
     public Termin(String name, java.time.LocalDateTime start, java.time.LocalDateTime ende){
-        if(name == null || start == null || ende == null){
-            throw new IllegalArgumentException("Name, Start und Ende des Termins sind Pflichtfelder.");
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("Name ist ein Pflichtfeld.");
         }
-
         if(!start.isBefore(ende)){
             throw new IllegalArgumentException("Das Startdatum des Termins muss vor dem Enddatum liegen.");
         }

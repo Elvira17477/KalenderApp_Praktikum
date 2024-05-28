@@ -5,7 +5,6 @@ import anzeige.KalenderFenster;
 import anzeige.TerminalAnzeige;
 import kalender.modell.*;
 
-import java.awt.*;
 import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
@@ -185,7 +184,7 @@ public class KalenderApp {
         KalenderFenster fenster = new KalenderFenster();
         fenster.ausgeben();
 
-//        Benutzereingabe();
+        //Benutzereingabe();
 
     }
 }

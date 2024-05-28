@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class KalenderFenster extends KalenderAnzeige {
     Frame fenster;
@@ -191,7 +192,10 @@ public class KalenderFenster extends KalenderAnzeige {
                 String endDatum = terminEnde.getText();
                 String terminNameText = terminName.getText();
                 try {
-                    Termin termin = new Termin(terminNameText, LocalDateTime.parse(startDatum, formatter), LocalDateTime.parse(endDatum, formatter));
+                    LocalDateTime start = LocalDateTime.parse(startDatum, formatter);
+                    LocalDateTime end = LocalDateTime.parse(endDatum, formatter);
+
+                    Termin termin = new Termin(terminNameText, start, end);
                     String name = kalenderChoice.getSelectedItem();
                     Kalenderserie.returnKalender(name).addTermin(termin);
                     terminStart.setText("");
@@ -199,8 +203,9 @@ public class KalenderFenster extends KalenderAnzeige {
                     terminName.setText("");
                     fehlermeldung.setText("");
                     aktualisiereTerminListe(Kalenderserie.returnKalender(name));
-                }
-                catch(TerminUeberschneidungException ex) {
+                }catch (DateTimeParseException ex){
+                    fehlermeldung.setText("Fehler beim Erstellen des Termins: Start und Ende sind Pflichtfelder.");
+                }catch(TerminUeberschneidungException ex) {
                     fehlermeldung.setText("Termin \"" + ex.getTermin().getName() + "\" ueberschneidet sich.");
                 }catch(PersonNichtVerfuegbarException ex){
                     fehlermeldung.setText("Mitglied " + ex.getPerson() + " hat mit dem Termin \"" + ex.getTermin().getName() +

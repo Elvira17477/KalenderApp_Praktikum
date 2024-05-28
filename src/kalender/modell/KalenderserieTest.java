@@ -30,7 +30,7 @@ public class KalenderserieTest {
                     LocalDateTime.parse("2024-05-20T12:00"));
             fail("Expected IllegalArgumentException to be thrown");
         }catch (IllegalArgumentException ex){
-            assertEquals("Name, Start und Ende des Termins sind Pflichtfelder.", ex.getMessage());
+            assertEquals("Name ist ein Pflichtfeld.", ex.getMessage());
         }
 
         try {
@@ -98,7 +98,7 @@ public class KalenderserieTest {
             new RaumKalender("MeinKalender", 0);
             fail("Expected IllegalArgumentException to be thrown.");
         }catch (IllegalArgumentException ex){
-            assertEquals("Plaetze ist ein Pflichtfeld im Raumkalender.", ex.getMessage());
+            assertEquals("Plätze ist Pflichtfeld im Raumkalender.", ex.getMessage());
         }
     }
 
@@ -109,7 +109,7 @@ public class KalenderserieTest {
             new GruppenKalender("MeinKalender", mitglieder);
             fail("Expected IllegalArgumentException to be thrown.");
         }catch (IllegalArgumentException ex){
-            assertEquals("Mitglieder ist ein Pflichtfeld im Gruppenkalender.", ex.getMessage());
+            assertEquals("Mitglieder und Name sind Pflichtfelder im Gruppenkalender.", ex.getMessage());
         }
     }
 
