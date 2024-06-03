@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Kalender xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="kalender.xsd">
+    <RaumKalender>
+        <Name>Hörsaal D250</Name>
+        <Termine>
+            <Termin>
+                <Name>Vorlesung Mathe2</Name>
+                <Start>2024-05-30T08:00:00</Start>
+                <Ende>2024-05-30T10:00:00</Ende>
+            </Termin>
+            <Termin>
+                <Name>Vorlesung EIDOP</Name>
+                <Start>2024-05-30T10:00:00</Start>
+                <Ende>2024-05-30T12:00:00</Ende>
+            </Termin>
+            <Termin>
+                <Name>Uebung Mathe2</Name>
+                <Start>2024-05-30T12:00:00</Start>
+                <Ende>2024-05-30T14:00:00</Ende>
+            </Termin>
+        </Termine>
+        <Plaetze>400</Plaetze>
+    </RaumKalender>
+</Kalender>
+

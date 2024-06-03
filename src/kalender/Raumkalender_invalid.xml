@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Kalender xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="kalender.xsd">
+    <RaumKalender>
+        <Name>Raum1</Name>
+        <Termine>
+            <Termin>
+                <Name>Vorlesung SoftSkills</Name>
+                <Start>2024-05-30T08:00:00</Start>
+                <Ende>2024-05-30T10:00:00</Ende>
+            </Termin>
+        </Termine>
+        <Plaetze>zehn</Plaetze>    <!-- string statt integer -->
+    </RaumKalender>
+</Kalender>

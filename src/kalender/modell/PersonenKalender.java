@@ -27,6 +27,11 @@ public class PersonenKalender extends Kalender{
         addPersonenKalender(this);
     }
 
+    public String getBesitzer(){
+        return besitzer;
+    }
+
+
     /**
      * Fügt einen Personenkalender zum Array der vorhandenen Personenkalender hinzu.
      * @param pkalender Der Personenkalender, der hinzugefügt werden soll.

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Kalender xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="kalender.xsd">
+    <GruppenKalender>
+        <Name>Gruppe2</Name>
+        <Termine>
+            <Termin>
+                <Name>Praktikum EIDOP</Name>
+                <Start>2024-05-30T08:00:00</Start>
+                <Ende>2024-05-30T10:00:00</Ende>
+            </Termin>
+            <Termin>
+                <Name>Praktikum EIDOP</Name>
+                <Start>2024-06-06T08:00:00</Start>
+                <Ende>2024-06-06T10:00:00</Ende>
+            </Termin>
+            <Termin>
+                <Name>Praktikum EIDOP</Name>
+                <Start>2024-06-13T08:00:00</Start>
+                <Ende>2024-06-13T10:00:00</Ende>
+            </Termin>
+        </Termine>
+        <Mitglieder>
+            <Mitglied>Eva</Mitglied>
+        </Mitglieder>
+    </GruppenKalender>
+</Kalender>

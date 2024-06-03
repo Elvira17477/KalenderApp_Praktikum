@@ -1,8 +1,11 @@
 package anzeige;
 import kalender.modell.*;
+import kalender.xmlKalenderLader;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -12,6 +15,7 @@ public class KalenderFenster extends KalenderAnzeige {
     Choice kalenderChoice;
     List terminListe;
     Label fehlermeldung;
+    JFileChooser fileChooser, fileChooser1;
 
     /**
      * Konstruktor, der den Kalender für die Anzeige festlegt.
@@ -81,12 +85,16 @@ public class KalenderFenster extends KalenderAnzeige {
         middlePanel1.add(new Label("                                                                                  "));
         middlePanel1.add(new Label("                                                                                  "));
         middlePanel1.add(new Label("                                                                                  "));
-        middlePanel1.add(new Label("                                             "));
-        Button terminErstellenButton = new Button("                Termin hinzufügen                ");
+        middlePanel1.add(new Label("                                                   "));
+        Button terminErstellenButton = new Button("            Termin hinzufügen              ");
+        Button fileWaehlenButton = new Button("                Kalender laden                       ");
+        Button kalenderSpeichernButton = new Button("             Kalender speichern                ");
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
         middlePanel1.add(terminErstellenButton);
+        middlePanel1.add(fileWaehlenButton);
+        middlePanel1.add(kalenderSpeichernButton);
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
@@ -194,7 +202,61 @@ public class KalenderFenster extends KalenderAnzeige {
             }
         });
 
-        // ActionListener für Termin erstellen
+        fileWaehlenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File("./src/kalender")); //set directory to project folder
+
+                int response = fileChooser.showOpenDialog(null);
+
+                if(response == JFileChooser.APPROVE_OPTION){
+                    File file = fileChooser.getSelectedFile();
+                    String path = file.getAbsolutePath();
+
+                    try {
+                        xmlKalenderLader lader = new xmlKalenderLader(path);
+                        Kalender kalender = lader.loadCalendar();
+                        Kalenderserie.addKalender(kalender);
+                        kalenderName.setText("");
+                        mitglieder.setText("");
+                        fehlermeldung.setText("");
+                        kalenderChoice.add(kalender.getName());
+                        aktualisiereTerminListe(kalender);
+
+                    } catch (Exception ex) {
+                        fehlermeldung.setText("Fehler: " + ex.getMessage());
+                    }
+                }
+            }
+        });
+
+        kalenderSpeichernButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileChooser1 = new JFileChooser();
+                fileChooser1.setCurrentDirectory(new File("./src/kalender"));
+                int response = fileChooser1.showSaveDialog(null);
+
+                if(response == JFileChooser.APPROVE_OPTION){
+                    File fileToSave = fileChooser1.getSelectedFile();
+                    if (!fileToSave.getName().endsWith(".xml")) {
+                        fileToSave = new File(fileToSave.getPath() + ".xml");
+                    }
+
+                    String kalenderName = kalenderChoice.getSelectedItem();
+                    Kalender kalender = Kalenderserie.returnKalender(kalenderName);
+                    if (kalender != null) {
+                        try {
+                            new xmlKalenderLader(kalender, fileToSave.getPath());
+                        } catch (Exception ex) {
+                            fehlermeldung.setText("Fehler beim Speichern des Kalenders: " + ex.getMessage());
+                        }
+                    }
+                }
+            }
+        });
+
         terminErstellenButton.addActionListener(new ActionListener() {
             final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             @Override
