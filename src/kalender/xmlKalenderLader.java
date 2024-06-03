@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 
 
 public class xmlKalenderLader {
-    private final String path;     //pfad der xml-Datei
+    private String path;     //pfad der xml-Datei
     private Document doc;
     private Element rootElement;
 
@@ -47,9 +47,10 @@ public class xmlKalenderLader {
             rootElement = doc.getDocumentElement();
 
         }catch (Exception ex){
-            throw new Exception("Fehler beim Validieren und Parsen der XML File " + ex.getMessage());
+            throw new Exception("Fehler beim Erstellen der XML File " + ex.getMessage());
         }
     }
+
 
     private Document createNewDocument(Kalender kalender) throws ParserConfigurationException {
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -130,25 +131,8 @@ public class xmlKalenderLader {
         return element;
     }
 
-//    private void validateDocument(Document document) throws Exception {
-//        // Implementiere die XML-Validierung
-//        try {
-//            InputStream schemaFileStream = new FileInputStream("./src/kalender/kalender.xsd");
-//            Source schemaFileSource = new StreamSource(schemaFileStream);
-//
-//            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-//            Schema schema = factory.newSchema(schemaFileSource);
-//
-//            Validator validator = schema.newValidator();
-//            DOMSource domSource = new DOMSource(document);
-//            validator.validate(domSource);
-//        } catch (Exception e) {
-//            throw new Exception("Fehler bei der Validierung des XML-Dokuments: " + e.getMessage());
-//        }
-//    }
     private void validateDocument() throws Exception {
-        try{
-            InputStream schemaFileStream = new FileInputStream("./src/kalender/kalender.xsd");
+        try(InputStream schemaFileStream = new FileInputStream("./src/kalender/kalender.xsd")){
             InputStream xmlFileStream = new FileInputStream(path);
 
             // Zugehörige Source-Objekte je Stream
@@ -168,13 +152,16 @@ public class xmlKalenderLader {
         }
     }
 
-    public Document parseDocument() throws IOException, ParserConfigurationException, SAXException {
-        InputStream xmlFileStreamForParsing = new FileInputStream(path);
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+    public Document parseDocument() throws Exception {
+        try(InputStream xmlFileStreamForParsing = new FileInputStream(path)) {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
-        doc = dBuilder.parse(xmlFileStreamForParsing);
-        return doc;
+            doc = dBuilder.parse(xmlFileStreamForParsing);
+            return doc;
+        }catch (Exception e){
+            throw new Exception("Fehler bei Validierung und Parsen der XML-Datei: " + e.getMessage());
+        }
     }
 
     private void writeDocumentToFile(Document document, String path) throws TransformerException {
@@ -188,6 +175,9 @@ public class xmlKalenderLader {
     }
 
     public void importDataIntoCalendar(Kalender existenterKalender) throws Exception {
+        if (rootElement == null) {
+            throw new Exception("Das Root-Element ist null.");
+        }
         NodeList termineListe = rootElement.getElementsByTagName("Termin");
 
         for (int i = 0; i < termineListe.getLength(); i++) {
@@ -227,7 +217,7 @@ public class xmlKalenderLader {
                 String name = rootElement.getElementsByTagName("Name").item(0).getTextContent();
                 NodeList mitgliederListe = rootElement.getElementsByTagName("Mitglied");
 
-                String[] mitglieder = new String[10];
+                String[] mitglieder = new String[mitgliederListe.getLength()];
                 for (int i = 0; i < mitgliederListe.getLength(); i++) {
                     mitglieder[i] = mitgliederListe.item(i).getTextContent();
                 }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>                  <!-- prolog -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            targetNamespace=""
+            elementFormDefault="qualified">            <!-- Vorlage für Dokumente aus dem targetNamespace -->
+
+
+    <!-- Abstrakte Definition der Grundstruktur Kalender -->
+    <!-- complexType: made of several elements -->
+    <xs:complexType name = "Kalender" abstract="true">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Termine">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Termin" type="Termin" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- Wurzelelement Kalender -->
+    <xs:element name="Kalender">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="RaumKalender" type="RaumKalender"/>
+                <xs:element name="PersonenKalender" type="PersonenKalender"/>
+                <xs:element name="GruppenKalender" type="GruppenKalender"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- Definition RaumKalender -->
+    <xs:complexType name="RaumKalender">
+        <xs:complexContent>
+            <xs:extension base="Kalender">
+                <xs:sequence>
+                    <xs:element name="Plaetze" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- Definition PersonenKalender -->
+    <xs:complexType name="PersonenKalender">
+        <xs:complexContent>
+            <xs:extension base="Kalender">
+                <xs:sequence>
+                    <xs:element name="Besitzer" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- Definition GruppenKalender -->
+    <xs:complexType name="GruppenKalender">
+        <xs:complexContent>
+            <xs:extension base="Kalender">
+                <xs:sequence>
+                    <xs:element name="Mitglieder">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Mitglied" type="xs:string" maxOccurs="10"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- Definition Termin -->
+    <xs:complexType name="Termin">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Start" type="xs:dateTime">
+<!--                <xs:simpleType>-->
+<!--                    <xs:restriction base="xs:dateTime">-->
+<!--                        <xs:pattern value="\d{4}-\d{2}-\d{2} \d{2}:\d{2}"/>-->
+<!--                    </xs:restriction>-->
+<!--                </xs:simpleType>-->
+            </xs:element>
+            <xs:element name="Ende" type="xs:dateTime">
+<!--                <xs:simpleType>-->
+<!--                    <xs:restriction base="xs:dateTime">-->
+<!--                        <xs:pattern value="\d{4}-\d{2}-\d{2} \d{2}:\d{2}"/>-->
+<!--                    </xs:restriction>-->
+<!--                </xs:simpleType>-->
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
