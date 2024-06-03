@@ -224,7 +224,13 @@ public class KalenderFenster extends KalenderAnzeige {
                         kalenderChoice.add(kalender.getName());
                         aktualisiereTerminListe(kalender);
 
-                    } catch (Exception ex) {
+                    } catch (PersonNichtVerfuegbarException ex){
+                        fehlermeldung.setText("Person ist nicht verfügbar. " + ex.getMessage());
+                    }
+                    catch (TerminUeberschneidungException ex){
+                        fehlermeldung.setText("Termin überschneidet sich. " + ex.getMessage());
+                    }
+                    catch (Exception ex) {
                         fehlermeldung.setText("Fehler: " + ex.getMessage());
                     }
                 }
