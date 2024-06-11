@@ -314,7 +314,9 @@ public class KalenderFenster extends KalenderAnzeige {
             terminListe.add("Kalender:\t " + kalender.getName());
             if (kalender instanceof RaumKalender) {
                 terminListe.add("Plaetze:\t " + ((RaumKalender) kalender).getPlaetze());
-            } else if (kalender instanceof GruppenKalender) {
+            }else if(kalender instanceof PersonenKalender){
+                terminListe.add("Besitzer:\t " + ((PersonenKalender) kalender).getBesitzer());
+            }else if (kalender instanceof GruppenKalender) {
                 terminListe.add("Mitglieder:\t " + String.join(", ", ((GruppenKalender) kalender).getMitglieder()));
             }
 
