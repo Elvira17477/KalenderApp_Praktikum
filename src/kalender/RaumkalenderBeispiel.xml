@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Kalender>
+    <RaumKalender>
+        <Name>RaumKalender1</Name>
+        <Termine>
+            <Termin>
+                <Name>bla</Name>
+                <Start>2024-06-06T08:00:00</Start>
+                <Ende>2024-06-06T10:00:00</Ende>
+            </Termin>
+        </Termine>
+        <Plaetze>20</Plaetze>
+    </RaumKalender>
+</Kalender>
