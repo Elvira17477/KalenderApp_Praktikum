@@ -15,10 +15,10 @@ public class KalenderFenster extends KalenderAnzeige {
     Choice kalenderChoice;
     List terminListe;
     Label fehlermeldung;
-    JFileChooser fileChooser, fileChooser1;
+    JFileChooser fileChooser, fileChooser1, fileChooser2;
 
     /**
-     * Konstruktor, der den Kalender für die Anzeige festlegt.
+     * Konstruktor, der ein GUI erstellt.
      */
     public KalenderFenster() {
         super(null);
@@ -87,14 +87,16 @@ public class KalenderFenster extends KalenderAnzeige {
         middlePanel1.add(new Label("                                                                                  "));
         middlePanel1.add(new Label("                                                   "));
         Button terminErstellenButton = new Button("            Termin hinzufügen              ");
-        Button fileWaehlenButton = new Button("                Kalender laden                       ");
+        Button kalenderLadenButton = new Button("                Kalender laden                       ");
         Button kalenderSpeichernButton = new Button("             Kalender speichern                ");
+        //Button datenLadenButton = new Button("                  Daten laden                     ");
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
         middlePanel1.add(terminErstellenButton);
-        middlePanel1.add(fileWaehlenButton);
+        middlePanel1.add(kalenderLadenButton);
         middlePanel1.add(kalenderSpeichernButton);
+        //middlePanel1.add(datenLadenButton);
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
         middlePanel1.add(new Label(""));
@@ -202,7 +204,7 @@ public class KalenderFenster extends KalenderAnzeige {
             }
         });
 
-        fileWaehlenButton.addActionListener(new ActionListener() {
+        kalenderLadenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fileChooser = new JFileChooser();
@@ -216,13 +218,18 @@ public class KalenderFenster extends KalenderAnzeige {
 
                     try {
                         xmlKalenderLader lader = new xmlKalenderLader(path);
+
                         Kalender kalender = lader.loadCalendar();
-                        Kalenderserie.addKalender(kalender);
-                        kalenderName.setText("");
-                        mitglieder.setText("");
-                        fehlermeldung.setText("");
-                        kalenderChoice.add(kalender.getName());
-                        aktualisiereTerminListe(kalender);
+                        if(!Kalenderserie.kalenderExistiert(kalender.getName())) {
+                            Kalenderserie.addKalender(kalender);
+                            kalenderName.setText("");
+                            mitglieder.setText("");
+                            fehlermeldung.setText("");
+                            kalenderChoice.add(kalender.getName());
+                            aktualisiereTerminListe(kalender);
+                        }else{
+                            fehlermeldung.setText("Der Kalender existiert bereits.");
+                        }
 
                     } catch (PersonNichtVerfuegbarException ex){
                         fehlermeldung.setText("Person ist nicht verfügbar. " + ex.getMessage());
@@ -254,7 +261,8 @@ public class KalenderFenster extends KalenderAnzeige {
                     Kalender kalender = Kalenderserie.returnKalender(kalenderName);
                     if (kalender != null) {
                         try {
-                            new xmlKalenderLader(kalender, fileToSave.getPath());
+                            String fileToSavePath = fileToSave.getPath();
+                            new xmlKalenderLader(kalender, fileToSavePath);
                         } catch (Exception ex) {
                             fehlermeldung.setText("Fehler beim Speichern des Kalenders: " + ex.getMessage());
                         }
@@ -296,6 +304,10 @@ public class KalenderFenster extends KalenderAnzeige {
         });
     }
 
+    /**
+     * Aktualisiert die Terminliste basierend auf dem ausgewählten Kalender.
+     * @param kalender Der ausgewählte Kalender.
+     */
     public void aktualisiereTerminListe(Kalender kalender) {
         terminListe.removeAll();
         if (kalender != null) {
@@ -313,6 +325,9 @@ public class KalenderFenster extends KalenderAnzeige {
         }
     }
 
+    /**
+     * Überschreibt die Methode "ausgeben" der Oberklasse und zeigt das Kalenderfenster an.
+     */
     @Override
     public void ausgeben() {
         fenster.setVisible(true);

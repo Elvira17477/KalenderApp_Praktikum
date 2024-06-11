@@ -1,13 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>                  <!-- prolog -->
+<?xml version="1.0" encoding="UTF-8"?>                  <!-- prolog mit xml version & zeichenkodierung des docs -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
             targetNamespace=""
-            elementFormDefault="qualified">            <!-- Vorlage für Dokumente aus dem targetNamespace -->
+            elementFormDefault="qualified">             <!-- Vorlage für Dokumente aus dem targetNamespace,
+                                                             InstanzDocs müssen sich an Struktur und Typen des schemas halten -->
 
 
-    <!-- Abstrakte Definition der Grundstruktur Kalender -->
+    <!-- Abstrakte Definition, besteht aus einem Namen und Liste von Terminen, dient als Basis für instanziierbare Kalender -->
     <!-- complexType: made of several elements -->
-    <xs:complexType name = "Kalender" abstract="true">
-        <xs:sequence>
+
+    <xs:complexType name = "Kalender" abstract="true">   <!-- abstract verhindert direkte Instanziierung -->
+        <xs:sequence>            <!-- sequence legt Reihenfolge der elemente fest und verhindert zusätzliche elemente -->
             <xs:element name="Name" type="xs:string"/>
             <xs:element name="Termine">
                 <xs:complexType>
@@ -20,10 +22,10 @@
     </xs:complexType>
 
 
-    <!-- Wurzelelement Kalender -->
-    <xs:element name="Kalender">
-        <xs:complexType>
-            <xs:choice>
+    <!-- Wurzelelement Kalender, kann entweder Raum-, Personen- oder Gruppenkalender sein -->
+    <xs:element name="Kalender">    <!-- simpleType kann nur textcontent enthalten, keine attribute oder kindelemente -->
+        <xs:complexType>            <!-- complexType kann attribute, elemente oder oder einen mix davon enthalten -->
+            <xs:choice>             <!-- choice beschränkt auf einen einzigen KalenderTyp innerhalb von Kalender -->
                 <xs:element name="RaumKalender" type="RaumKalender"/>
                 <xs:element name="PersonenKalender" type="PersonenKalender"/>
                 <xs:element name="GruppenKalender" type="GruppenKalender"/>
@@ -32,9 +34,9 @@
     </xs:element>
 
 
-    <!-- Definition RaumKalender -->
+    <!-- Definition RaumKalender, erweitert abstrakten KalenderTyp um das Element Plätze -->
     <xs:complexType name="RaumKalender">
-        <xs:complexContent>
+        <xs:complexContent>     <!-- complexContent: Raumkalender extends Kalender und erbt alle elemente und attribute -->
             <xs:extension base="Kalender">
                 <xs:sequence>
                     <xs:element name="Plaetze" type="xs:int"/>
@@ -44,7 +46,7 @@
     </xs:complexType>
 
 
-    <!-- Definition PersonenKalender -->
+    <!-- Definition PersonenKalender, erweitert abstrakten KalenderTyp um das Element Besitzer -->
     <xs:complexType name="PersonenKalender">
         <xs:complexContent>
             <xs:extension base="Kalender">
@@ -56,7 +58,7 @@
     </xs:complexType>
 
 
-    <!-- Definition GruppenKalender -->
+    <!-- Definition GruppenKalender, erweitert abstrakten KalenderTyp um eine Liste von bis zu 10 Mitglied-Elementen -->
     <xs:complexType name="GruppenKalender">
         <xs:complexContent>
             <xs:extension base="Kalender">
@@ -78,21 +80,8 @@
     <xs:complexType name="Termin">
         <xs:sequence>
             <xs:element name="Name" type="xs:string"/>
-            <xs:element name="Start" type="xs:dateTime">
-<!--                <xs:simpleType>-->
-<!--                    <xs:restriction base="xs:dateTime">-->
-<!--                        <xs:pattern value="\d{4}-\d{2}-\d{2} \d{2}:\d{2}"/>-->
-<!--                    </xs:restriction>-->
-<!--                </xs:simpleType>-->
-            </xs:element>
-            <xs:element name="Ende" type="xs:dateTime">
-<!--                <xs:simpleType>-->
-<!--                    <xs:restriction base="xs:dateTime">-->
-<!--                        <xs:pattern value="\d{4}-\d{2}-\d{2} \d{2}:\d{2}"/>-->
-<!--                    </xs:restriction>-->
-<!--                </xs:simpleType>-->
-            </xs:element>
+            <xs:element name="Start" type="xs:dateTime"/>
+            <xs:element name="Ende" type="xs:dateTime"/>
         </xs:sequence>
     </xs:complexType>
-
 </xs:schema>
