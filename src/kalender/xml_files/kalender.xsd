@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>                  <!-- prolog mit xml version & zeichenkodierung des docs -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-            targetNamespace=""
-            elementFormDefault="qualified">             <!-- Vorlage für Dokumente aus dem targetNamespace,
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">             <!-- Vorlage für Dokumente aus dem targetNamespace,
                                                              InstanzDocs müssen sich an Struktur und Typen des schemas halten -->
-
 
     <!-- Abstrakte Definition, besteht aus einem Namen und Liste von Terminen, dient als Basis für instanziierbare Kalender -->
     <!-- complexType: made of several elements -->
-
     <xs:complexType name = "Kalender" abstract="true">   <!-- abstract verhindert direkte Instanziierung -->
         <xs:sequence>            <!-- sequence legt Reihenfolge der elemente fest und verhindert zusätzliche elemente -->
             <xs:element name="Name" type="xs:string"/>
@@ -21,6 +17,7 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!-- complexType legt struktur und reihenfolge der attribute und kindelemente fest -->
 
     <!-- Wurzelelement Kalender, kann entweder Raum-, Personen- oder Gruppenkalender sein -->
     <xs:element name="Kalender">    <!-- simpleType kann nur textcontent enthalten, keine attribute oder kindelemente -->

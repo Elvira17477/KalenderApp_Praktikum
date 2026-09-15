@@ -332,6 +332,7 @@ public class KalenderFenster extends KalenderAnzeige {
      */
     @Override
     public void ausgeben() {
+        fenster.setResizable(false);
         fenster.setVisible(true);
     }
 }

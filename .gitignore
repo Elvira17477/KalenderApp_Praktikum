@@ -1,29 +1,35 @@
-### IntelliJ IDEA ###
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Build output
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+target/
+build/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+# Java compiled files
+*.class
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
-.DS_Store
+# Generated JavaDoc
+index-files/
+allclasses-index.html
+allpackages-index.html
+element-list
+help-doc.html
+index.html
+member-search-index.js
+module-search-index.js
+overview-summary.html
+overview-tree.html
+package-search-index.js
+script.js
+search-page.js
+search.html
+search.js
+stylesheet.css
+tag-search-index.js
+type-search-index.js
+copy.svg
+anzeige/
+kalender/
+legal/

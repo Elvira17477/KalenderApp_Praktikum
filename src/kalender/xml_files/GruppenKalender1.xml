@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Kalender xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./kalender.xsd">
+<Kalender xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="kalender.xsd">
     <GruppenKalender>
         <Name>Gruppe1</Name>
         <Termine>
@@ -21,7 +21,7 @@
             </Termin>
         </Termine>
         <Mitglieder>
-            <Mitglied>Eva</Mitglied>
+            <Mitglied>Martina</Mitglied>
             <Mitglied>Ella</Mitglied>
         </Mitglieder>
     </GruppenKalender>

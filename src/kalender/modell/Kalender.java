@@ -18,7 +18,7 @@ public abstract class Kalender {
     private ArrayList<Termin> termine;
     private ArrayList<Terminserie> serien;
     private ArrayList<Termin> freieTermine;
-    private KalenderAnzeige kalenderAnzeige; //= new TerminalAnzeige(this);
+    private KalenderAnzeige kalenderAnzeige;
 
     /**
      * Konstruktor für die Initialisierung eines Kalenders mit einem Namen.
